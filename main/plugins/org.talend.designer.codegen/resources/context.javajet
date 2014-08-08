@@ -7,20 +7,18 @@
 		java.util.Properties
 		java.io.ByteArrayOutputStream
 		org.talend.core.model.utils.TalendTextUtils
+		org.talend.core.model.utils.ContextOrderProperties
 	" 
 	class="Context" 
 %>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	List<IContextParameter> parameterList = (List<IContextParameter>) codeGenArgument.getArgument();
-	Properties context = new Properties();
-	for (IContextParameter parameter : parameterList) {
-		context.put(parameter.getName(), TalendTextUtils.trimParameter(parameter.getValue()));
-	}
+	ContextOrderProperties contextProperty = new ContextOrderProperties(parameterList);
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     try {
-        context.store(baos, "");
+        contextProperty.store(baos, "this is context properties");
     } catch (java.lang.Exception e) {
         e.printStackTrace();
     }
