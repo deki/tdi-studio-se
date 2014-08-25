@@ -15,10 +15,11 @@ imports="
 <%
 CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 INode node = (INode)codeGenArgument.getArgument();
+
 String incomingName = (String)codeGenArgument.getIncomingName();
-    
+
 String cid = node.getUniqueName();
-        
+
 List< ? extends IConnection> conns = node.getIncomingConnections();
 boolean hasDataLink = false;
 if(conns!=null){
@@ -71,6 +72,59 @@ if(hasDataLink){
 	}
 }
 //TODO STEP 1 : set other parameter(even 0 input connection)
+
 //TODO STEP 2 : execute function
+String client = ElementParameterParser.getValue(node, "__CLIENT__");
+String userid = ElementParameterParser.getValue(node, "__USERID__");
+String password = ElementParameterParser.getValue(node, "__PASSWORD__");
+String language = ElementParameterParser.getValue(node, "__LANGUAGE__");
+String hostname = ElementParameterParser.getValue(node, "__HOSTNAME__");
+String systemnumber = ElementParameterParser.getValue(node, "__SYSTEMNUMBER__");
+
+String systemId = ElementParameterParser.getValue(node,"__SYSTEMID__");
+String groupName = ElementParameterParser.getValue(node,"__GROUPNAME__");
+
+String serverType = ElementParameterParser.getValue(node,"__SERVERTYPE__");
+
+List<Map<String, String>> sapProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SAP_PROPERTIES__");
+
+String passwordFieldName = "__PASSWORD__";
+%>
+
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+
+java.util.Properties properties_<%=cid%> = new java.util.Properties();
+properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_APPLICATION_SERVER_HOST, <%=hostname%>);
+properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_CLIENT, <%=client%>);
+properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_USER, <%=userid%>);
+properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_PASSWORD, decryptedPassword_<%=cid%>);
+properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_LANGUAGE, <%=language%>);
+
+<%if("ApplicationServer".equals(serverType)){%>
+properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_SYSTEM_NUMBER, <%=systemnumber%>);
+<%}else{%>
+properties_<%=cid%>.put("jco.client.r3name", <%=systemId%>);
+properties_<%=cid%>.put("jco.client.group", <%=groupName%>);
+<%}%>
+    
+<%
+if(sapProps!=null) {
+	for(Map<String, String> item : sapProps){
+%>
+	properties_<%=cid%>.put(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+<% 
+	}
+}
+%>
+    
+org.talend.sap.ISAPConnection connection_<%=cid%> = org.talend.sap.impl.SAPConnectionFactory.getInstance().createConnection(properties_<%=cid%>);
+
+//TODO execute the bapi
+
+if(connection_<%=cid%>!=null && connection_<%=cid%>.isAlive()) {
+	connection_<%=cid%>.close();
+}
+	
+<%
 //TODO store the resultset to globalMap,then we can get the resultset in output part
 %>
