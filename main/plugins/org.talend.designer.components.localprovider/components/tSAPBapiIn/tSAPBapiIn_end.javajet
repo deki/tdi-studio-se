@@ -1,0 +1,45 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		org.talend.core.model.utils.TalendTextUtils
+		java.util.List
+		java.util.Map
+	" 
+%>
+<%
+CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+INode node = (INode)codeGenArgument.getArgument();
+String cid = node.getUniqueName();
+List< ? extends IConnection> conns = node.getOutgoingSortedConnections();
+boolean hasDataLink = false;
+if(conns!=null){
+	for(int i=0;i<conns.size();i++){
+		IConnection connTemp = conns.get(i);
+	    if (connTemp.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+	   		hasDataLink = true;
+	   		break;
+	    }
+	}
+}
+List<Map<String, String>> schemas_o = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SCHEMAS__");
+List<Map<String, String>> schemas = new java.util.ArrayList<Map<String, String>>();
+for(Map<String, String> schema_o : schemas_o){
+	Map<String, String> schema = new java.util.HashMap<String, String>();
+	schemas.add(schema);
+	schema.put("SCHEMA", TalendTextUtils.removeQuotes(schema_o.get("SCHEMA")));
+}
+
+if (hasDataLink) {
+%>
+	}
+<%
+}
+%>

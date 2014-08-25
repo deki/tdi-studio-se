@@ -1,0 +1,76 @@
+<%@ jet
+imports="
+    org.talend.core.model.process.INode 
+    org.talend.core.model.metadata.IMetadataTable
+    org.talend.core.model.metadata.IMetadataColumn
+    org.talend.core.model.process.IConnection
+    org.talend.core.model.process.ElementParameterParser
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+    org.talend.core.model.process.IConnectionCategory
+	java.util.List
+	org.talend.core.model.utils.TalendTextUtils
+	java.util.Map
+"
+%>
+<%
+CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+INode node = (INode)codeGenArgument.getArgument();
+String incomingName = (String)codeGenArgument.getIncomingName();
+    
+String cid = node.getUniqueName();
+        
+List< ? extends IConnection> conns = node.getIncomingConnections();
+boolean hasDataLink = false;
+if(conns!=null){
+	for(int i=0;i<conns.size();i++){
+		IConnection connTemp = conns.get(i);
+	    if (connTemp.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+	   		hasDataLink = true;
+	   		break;
+	    }
+	}
+}
+    
+if(hasDataLink){
+    List<Map<String, String>> schemas_o = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SCHEMAS__");
+	
+	List<Map<String, String>> schemas = new java.util.ArrayList<Map<String, String>>();
+	List<String> connections = new java.util.ArrayList<String>();
+	
+	for(Map<String, String> schema_o : schemas_o){
+		Map<String, String> schema = new java.util.HashMap<String, String>();
+		schema.put("SCHEMA", TalendTextUtils.removeQuotes(schema_o.get("SCHEMA")));
+		schema.put("SCHEMA_SOURCE", TalendTextUtils.removeQuotes(schema_o.get("SCHEMA_SOURCE")));
+		schema.put("STORE_KEY", TalendTextUtils.removeQuotes(schema_o.get("STORE_KEY")));
+		for(int i=0;i<conns.size();i++){
+    		IConnection connTemp = conns.get(i);
+    		if (connTemp.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+    			IMetadataTable tempMetadataTable = connTemp.getMetadataTable();
+				if(tempMetadataTable.getTableName().equals(schema.get("SCHEMA"))){
+					schema.put("CONNECTION", connTemp.getName());
+	    			List<IMetadataColumn> listColumns = tempMetadataTable.getListColumns();
+	    			connections.add(connTemp.getName());
+				}
+    		}
+    	}
+		schemas.add(schema);
+	}
+    
+    List< ? extends IConnection> incomingConns = node.getIncomingConnections();
+	for(int i=0; i < incomingConns.size(); i++){
+		IConnection conn = incomingConns.get(i);
+%>
+		//construct the sap init parameter
+		StringBuffer sb_<%=conn.getName()%>_<%=cid%> = new StringBuffer();
+		for(<%=conn.getName()%>Struct one_<%=cid%> : <%=conn.getName() %>List_<%=cid %>) {
+			sb_<%=conn.getName()%>_<%=cid%>.append(one_<%=cid%>);
+		}
+		System.out.println("the parameter that is generated : " + sb_<%=conn.getName()%>_<%=cid%>);
+		globalMap.put("<%=conn.getName()%>","the parameter that is generated : " + sb_<%=conn.getName()%>_<%=cid%>);	
+<% 
+	}
+}
+//TODO STEP 1 : set other parameter(even 0 input connection)
+//TODO STEP 2 : execute function
+//TODO store the resultset to globalMap,then we can get the resultset in output part
+%>
