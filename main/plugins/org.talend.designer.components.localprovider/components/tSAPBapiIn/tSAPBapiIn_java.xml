@@ -10,14 +10,15 @@
 		RELEASE_DATE="20140711A"
 		
 		STARTABLE="false" 
-		HAS_CONDITIONAL_OUTPUTS="true">
+		HAS_CONDITIONAL_OUTPUTS="true"
+		TECHNICAL="true"
+		>
 		<SIGNATURE />
 	</HEADER>
 
-  <FAMILIES>
-	  <FAMILY>Databases/SAP</FAMILY>
-	  <FAMILY>Business/SAP</FAMILY>
-  </FAMILIES>
+    <FAMILIES>
+  		<FAMILY>Technical</FAMILY>
+    </FAMILIES>
 
 	<DOCUMENTATION>
 		<URL />

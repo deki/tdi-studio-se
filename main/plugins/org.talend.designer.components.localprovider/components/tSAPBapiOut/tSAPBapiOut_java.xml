@@ -12,13 +12,13 @@
 		STARTABLE="false"
 		DATA_AUTO_PROPAGATE="true"
 		HAS_CONDITIONAL_OUTPUTS="true"
+		TECHNICAL="true"
 		>
 		<SIGNATURE />
 	</HEADER>
 
 	<FAMILIES>
-	  	<FAMILY>Databases/SAP</FAMILY>
-	    <FAMILY>Business/SAP</FAMILY>
+	  	<FAMILY>Technical</FAMILY>
 	</FAMILIES>
 
 	<DOCUMENTATION>
