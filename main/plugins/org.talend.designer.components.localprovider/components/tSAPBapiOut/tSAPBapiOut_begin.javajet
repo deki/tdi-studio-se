@@ -17,12 +17,20 @@ imports="
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
+	
 	String graphicalUniqueName = cid.replace("_TSAPBapi_OUT","");
+	List<? extends INode> grpapicalNodes = node.getProcess().getGraphicalNodes();
+	INode graphicalNode = null;
+	for(INode gnode : grpapicalNodes) {
+		if(graphicalUniqueName.equals(gnode.getUniqueName())) {
+			graphicalNode = gnode;
+			break;
+		}
+	}
 	
 	List<? extends IConnection> incomingConns = node.getIncomingConnections();
 
     List<Map<String, String>> originalInputParameters = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__MAPPING_INPUT__");
-	List<Map<String, String>> inputParameters = new java.util.ArrayList<Map<String, String>>();
 	
 	List<String> usefulConnections = new java.util.ArrayList<String>();
 	
@@ -51,14 +59,6 @@ imports="
 		//TODO it can't work,need to fix it,so now we only can get graph node
 		//IMetadataTable metadata = node.getMetadataTable(componentSchemaName);
 		
-		List<? extends INode> grpapicalNodes = node.getProcess().getGraphicalNodes();
-		INode graphicalNode = null;
-		for(INode gnode : grpapicalNodes) {
-			if(graphicalUniqueName.equals(gnode.getUniqueName())) {
-				graphicalNode = gnode;
-				break;
-			}
-		}
 		IMetadataTable metadata = graphicalNode.getMetadataTable(componentSchemaName);
 		
 		List<IMetadataColumn> columns = metadata.getListColumns();
@@ -70,15 +70,15 @@ imports="
 		if("SINGLE".equals(type)) {
 			IMetadataColumn column = columns.get(0);
 %>
-			documentHelper.addSingleParameter("<%=column.getLabel()%>",<%=column.getDefault()%>);
+			documentHelper_<%=cid%>.addSingleParameter("<%=column.getLabel()%>",<%=column.getDefault()%>);
 <%
 		} else if("STRUCTURE".equals(type)) {
 %>
-			documentHelper.addStructParameter("<%=name%>");
+			documentHelper_<%=cid%>.addStructParameter("<%=name%>");
 <%
 			for(IMetadataColumn column : columns) {
 %>
-			documentHelper.addStructChildParameter("<%=column.getLabel()%>",<%=column.getDefault()%>);
+			documentHelper_<%=cid%>.addStructChildParameter("<%=column.getLabel()%>",<%=column.getDefault()%>);
 <%
 			}
 		} else if("TABLE".equals(type)) {
@@ -91,13 +91,17 @@ imports="
 			for(int i=0;i<incomingConns.size();i++){
     			IConnection sourceConn = incomingConns.get(i);
 	    		if (sourceConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA) && sourceRow.equals(sourceConn.getName())) {
-					inputParameter.put("CONNECTION", sourceRow);
 	    			usefulConnections.add(sourceRow);
 	    		}
     		}
     		
 		}
 		
-		inputParameters.add(inputParameter);
+	}
+	
+	for(String connName : usefulConnections) {
+%>
+		int rowCount_<%=cid%>_<%=connName%> = 0;
+<%
 	}
 %>

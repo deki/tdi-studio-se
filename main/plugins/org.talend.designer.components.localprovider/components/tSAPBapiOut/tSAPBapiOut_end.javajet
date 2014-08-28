@@ -13,82 +13,67 @@ imports="
 "
 %>
 <%
-CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
-INode node = (INode)codeGenArgument.getArgument();
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	String graphicalUniqueName = cid.replace("_TSAPBapi_OUT","");
 
-String cid = node.getUniqueName();
-
-List< ? extends IConnection> conns = node.getIncomingConnections();
-
-List<Map<String, String>> schemas_o = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SCHEMAS__");
-
-List< ? extends IConnection> incomingConns = node.getIncomingConnections();
-for(int i=0; i < incomingConns.size(); i++){
-	IConnection conn = incomingConns.get(i);
-%>
-	//construct the sap init parameter
-	StringBuffer sb_<%=conn.getName()%>_<%=cid%> = new StringBuffer();
-	for(<%=conn.getName()%>Struct one_<%=cid%> : <%=conn.getName() %>List_<%=cid %>) {
-		sb_<%=conn.getName()%>_<%=cid%>.append(one_<%=cid%>);
-	}
-	System.out.println("the parameter that is generated : " + sb_<%=conn.getName()%>_<%=cid%>);
-	globalMap.put("<%=conn.getName()%>","the parameter that is generated : " + sb_<%=conn.getName()%>_<%=cid%>);	
-<% 
-}
-//TODO STEP 1 : set other parameter(even 0 input connection)
-
-//TODO STEP 2 : execute function
-String client = ElementParameterParser.getValue(node, "__CLIENT__");
-String userid = ElementParameterParser.getValue(node, "__USERID__");
-String password = ElementParameterParser.getValue(node, "__PASSWORD__");
-String language = ElementParameterParser.getValue(node, "__LANGUAGE__");
-String hostname = ElementParameterParser.getValue(node, "__HOSTNAME__");
-String systemnumber = ElementParameterParser.getValue(node, "__SYSTEMNUMBER__");
-
-String systemId = ElementParameterParser.getValue(node,"__SYSTEMID__");
-String groupName = ElementParameterParser.getValue(node,"__GROUPNAME__");
-
-String serverType = ElementParameterParser.getValue(node,"__SERVERTYPE__");
-
-List<Map<String, String>> sapProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SAP_PROPERTIES__");
-
-String passwordFieldName = "__PASSWORD__";
-%>
-
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
-
-java.util.Properties properties_<%=cid%> = new java.util.Properties();
-properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_APPLICATION_SERVER_HOST, <%=hostname%>);
-properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_CLIENT, <%=client%>);
-properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_USER, <%=userid%>);
-properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_PASSWORD, decryptedPassword_<%=cid%>);
-properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_LANGUAGE, <%=language%>);
-
-<%if("ApplicationServer".equals(serverType)){%>
-properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_SYSTEM_NUMBER, <%=systemnumber%>);
-<%}else{%>
-properties_<%=cid%>.put("jco.client.r3name", <%=systemId%>);
-properties_<%=cid%>.put("jco.client.group", <%=groupName%>);
-<%}%>
-    
-<%
-if(sapProps!=null) {
-	for(Map<String, String> item : sapProps){
-%>
-	properties_<%=cid%>.put(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
-<% 
-	}
-}
-%>
-    
-org.talend.sap.ISAPConnection connection_<%=cid%> = org.talend.sap.impl.SAPConnectionFactory.getInstance().createConnection(properties_<%=cid%>);
-
-//TODO execute the bapi
-
-if(connection_<%=cid%>!=null && connection_<%=cid%>.isAlive()) {
-	connection_<%=cid%>.close();
-}
+	String client = ElementParameterParser.getValue(node, "__CLIENT__");
+	String userid = ElementParameterParser.getValue(node, "__USERID__");
+	String password = ElementParameterParser.getValue(node, "__PASSWORD__");
+	String language = ElementParameterParser.getValue(node, "__LANGUAGE__");
+	String hostname = ElementParameterParser.getValue(node, "__HOSTNAME__");
+	String systemnumber = ElementParameterParser.getValue(node, "__SYSTEMNUMBER__");
 	
-<%
-//TODO store the resultset to globalMap,then we can get the resultset in output part
+	String systemId = ElementParameterParser.getValue(node,"__SYSTEMID__");
+	String groupName = ElementParameterParser.getValue(node,"__GROUPNAME__");
+	
+	String serverType = ElementParameterParser.getValue(node,"__SERVERTYPE__");
+	
+	String sapFunction = ElementParameterParser.getValue(node,"__SAP_FUNCTION__");
+	
+	List<Map<String, String>> sapProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SAP_PROPERTIES__");
+	
+	String passwordFieldName = "__PASSWORD__";
 %>
+
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+
+	java.util.Properties properties_<%=cid%> = new java.util.Properties();
+	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_APPLICATION_SERVER_HOST, <%=hostname%>);
+	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_CLIENT, <%=client%>);
+	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_USER, <%=userid%>);
+	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_PASSWORD, decryptedPassword_<%=cid%>);
+	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_LANGUAGE, <%=language%>);
+
+	<%if("ApplicationServer".equals(serverType)){%>
+	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_SYSTEM_NUMBER, <%=systemnumber%>);
+	<%}else{%>
+	properties_<%=cid%>.put("jco.client.r3name", <%=systemId%>);
+	properties_<%=cid%>.put("jco.client.group", <%=groupName%>);
+	<%}%>
+    
+<%
+	if(sapProps!=null) {
+		for(Map<String, String> item : sapProps){
+%>
+		properties_<%=cid%>.put(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+<% 
+		}
+	}
+%>
+    
+	org.talend.sap.ISAPConnection connection_<%=cid%> = org.talend.sap.impl.SAPConnectionFactory.getInstance().createConnection(properties_<%=cid%>);
+
+	org.dom4j.Document inputDocument_<%=cid%> = documentHelper_<%=cid%>.getDocument();
+	
+	org.talend.sap.service.ISAPBapiService service_<%=cid%> = connection_<%=cid%>.getBapiService();
+	org.talend.sap.model.bapi.ISAPBapiTemplate template_<%=cid%> = service_<%=cid%>.getBapiTemplate(<%=sapFunction%>);
+	template_<%=cid%>.setXml(inputDocument_<%=cid%>);
+	org.dom4j.Document outputDocument_<%=cid%> = template_<%=cid%>.execute();
+	
+	if(connection_<%=cid%>!=null && connection_<%=cid%>.isAlive()) {
+		connection_<%=cid%>.close();
+	}
+	
+	globalMap.put("outputDocument_<%=graphicalUniqueName%>",outputDocument_<%=cid%>);

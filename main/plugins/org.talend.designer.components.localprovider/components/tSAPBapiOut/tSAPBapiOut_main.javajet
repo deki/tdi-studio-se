@@ -13,12 +13,82 @@ imports="
 "
 %>
 <%
-CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
-INode node = (INode)codeGenArgument.getArgument();
-String cid = node.getUniqueName();
-
-String incomingName = (String)codeGenArgument.getIncomingName();
-//System.out.println(incomingName);
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	String graphicalUniqueName = cid.replace("_TSAPBapi_OUT","");
+	List<? extends INode> grpapicalNodes = node.getProcess().getGraphicalNodes();
+	INode graphicalNode = null;
+	for(INode gnode : grpapicalNodes) {
+		if(graphicalUniqueName.equals(gnode.getUniqueName())) {
+			graphicalNode = gnode;
+			break;
+		}
+	}
+	
+	String incomingName = (String)codeGenArgument.getIncomingName();
+	
+    List<Map<String, String>> originalInputParameters = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__MAPPING_INPUT__");
+	
+	String currentTableName = null;
+	List<IMetadataColumn> currentColumns = null;
+	
+	for(Map<String, String> originalInputParameter : originalInputParameters){
+		Map<String, String> inputParameter = new java.util.HashMap<String, String>();
+		inputParameter.put("NAME", TalendTextUtils.removeQuotes(originalInputParameter.get("NAME")));
+		inputParameter.put("TYPE", TalendTextUtils.removeQuotes(originalInputParameter.get("TYPE")));
+		inputParameter.put("SCHEMA", TalendTextUtils.removeQuotes(originalInputParameter.get("SCHEMA")));
+		inputParameter.put("PARENT_ROW", TalendTextUtils.removeQuotes(originalInputParameter.get("PARENT_ROW")));
+		
+		String type = inputParameter.get("TYPE");
+		
+		if(!"TABLE".equals(type)) {
+			continue;
+		}
+		
+		String sourceRow = inputParameter.get("PARENT_ROW");
+		if(sourceRow==null || "".equals(sourceRow) || !sourceRow.equals(incomingName)) {
+			continue;
+		}
+		
+		String componentSchemaName = inputParameter.get("SCHEMA");
+		
+		if(componentSchemaName == null || "".equals(componentSchemaName)) {
+			continue;
+		}
+		
+		//TODO it can't work,need to fix it,so now we only can get graph node
+		//IMetadataTable metadata = node.getMetadataTable(componentSchemaName);
+		
+		IMetadataTable metadata = graphicalNode.getMetadataTable(componentSchemaName);
+		
+		List<IMetadataColumn> columns = metadata.getListColumns();
+		
+		if(columns == null || columns.isEmpty()) {
+			continue;
+		}
+		
+		currentTableName = inputParameter.get("NAME");
+		currentColumns = columns;
+		
+		break;
+	}
+	
+	if(currentTableName == null || currentColumns == null) {
+		return "";
+	}
 %>
-	<%=incomingName%>List_<%=cid %>.add(<%=incomingName%>);
-
+	rowCount_<%=cid%>_<%=incomingName%>++;
+	if(rowCount_<%=cid%>_<%=incomingName%> == 1) {
+		documentHelper_<%=cid%>.addTableParameter("<%=currentTableName%>");
+	}
+	
+	documentHelper_<%=cid%>.addTableRow();
+<%
+	for(IMetadataColumn column : currentColumns) {
+%>
+	documentHelper_<%=cid%>.addTableRowChildParameter("<%=column.getLabel()%>",<%=column.getDefault()%>);
+<%
+	}
+%>
