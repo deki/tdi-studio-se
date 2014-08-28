@@ -15,48 +15,48 @@
 	" 
 %>
 <%
-CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
-INode node = (INode)codeGenArgument.getArgument();
-String cid = node.getUniqueName();
-List< ? extends IConnection> conns = node.getOutgoingSortedConnections();
-boolean hasDataLink = false;
-if(conns!=null){
-	for(int i=0;i<conns.size();i++){
-		IConnection connTemp = conns.get(i);
-	    if (connTemp.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
-	   		hasDataLink = true;
-	   		break;
-	    }
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	String graphicalUniqueName = cid.replace("_TSAPBapi_IN","");
+	
+	List< ? extends IConnection> conns = node.getOutgoingSortedConnections();
+	List<IConnection> connections = new java.util.ArrayList<String>();
+	List<String> connNames = new java.util.ArrayList<String>(); 
+	
+	if(conns!=null){
+		for(int i=0;i<conns.size();i++){
+			IConnection conn = conns.get(i);
+		    if(conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+		   		connections.add(conn);
+		   		connNames.add(conn.getName());
+		    }
+		}
 	}
-}
-List<Map<String, String>> schemas_o = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SCHEMAS__");
-List<Map<String, String>> schemas = new java.util.ArrayList<Map<String, String>>();
-for(Map<String, String> schema_o : schemas_o){
-	Map<String, String> schema = new java.util.HashMap<String, String>();
-	schemas.add(schema);
-	schema.put("SCHEMA", TalendTextUtils.removeQuotes(schema_o.get("SCHEMA")));
-}
+	
+	if(connections.isEmpty()) {
+		return "";
+	}
 
-if (hasDataLink) {
-    List<String> connections = new java.util.ArrayList<String>();
-    Map<String, List<IMetadataColumn>> connectionMapColumnList = new java.util.HashMap<String, List<IMetadataColumn>>();
-    Map<String, String> schemaConnectionMap = new java.util.HashMap<String, String>();
-    
-    for(int i=0;i<conns.size();i++){
-    	IConnection connTemp = conns.get(i);
-    	if (connTemp.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
-    		IMetadataTable tempMetadataTable = connTemp.getMetadataTable();
-    		for(Map<String, String> schema : schemas){
-    			if(tempMetadataTable.getLabel().equals(schema.get("SCHEMA"))){
-    				schemaConnectionMap.put(schema.get("SCHEMA"), connTemp.getName());
-    				break;
-    			}
-    		}
-    		List<IMetadataColumn> listColumns = tempMetadataTable.getListColumns();
-    		connections.add(connTemp.getName());
-    		connectionMapColumnList.put(connTemp.getName(), listColumns);
-    	}
-    }
+	List<Map<String, String>> originalOutputParameters = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SCHEMAS__");
+	List<Map<String, String>> outputParameters = new java.util.ArrayList<Map<String, String>>();
+	for(Map<String, String> originalOutputParameter : originalOutputParameters){
+		Map<String, String> outputParameter = new java.util.HashMap<String, String>();
+		outputParameter.put("NAME", TalendTextUtils.removeQuotes(originalOutputParameter.get("NAME")));
+		outputParameter.put("TYPE", TalendTextUtils.removeQuotes(originalOutputParameter.get("TYPE")));
+		outputParameter.put("SCHEMA", TalendTextUtils.removeQuotes(originalOutputParameter.get("SCHEMA")));
+		outputParameters.add(outputParameter);
+	}
+	
+%>
+	org.dom4j.Document outputDocument_<%=cid%> = (org.dom4j.Document)globalMap.get("outputDocument_<%=graphicalUniqueName%>");
+<%
+	for(int i=0;i<connections.size();i++){
+		IConnection conn = connections.get(i);
+		IMetadataTable metadata = conn.getMetadataTable();
+		List<IMetadataColumn> columns = metadata.getListColumns();
+	}
+	
 %>
 	//only a simulation
 	for(int i=0;i<10;i++) {
@@ -69,6 +69,3 @@ if (hasDataLink) {
 		} else if(isRow2) {
 			//init row2
 		}
-<%
-}
-%>
