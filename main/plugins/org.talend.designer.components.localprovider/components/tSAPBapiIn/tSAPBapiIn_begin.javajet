@@ -14,6 +14,7 @@
 		java.util.ArrayList
 		java.util.Map
 		java.util.HashMap
+		java.util.Iterator
 	" 
 %>
 <%
@@ -54,9 +55,9 @@
 				outputParameter.put("NAME", TalendTextUtils.removeQuotes(originalOutputParameter.get("NAME")));
 				outputParameter.put("TYPE", TalendTextUtils.removeQuotes(originalOutputParameter.get("TYPE")));
 				outputParameter.put("SCHEMA", schemaName);
-				outputParameter.put("COLUMNS",columns);
 				List<IMetadataColumn> columns = metadata.getListColumns();
-				outputParameter.put("CONNECTION",conn.getLabel());
+				outputParameter.put("COLUMNS",columns);
+				outputParameter.put("CONNECTION",conn.getName());
 				outputParameters.add(outputParameter);
 				break;
 			}
@@ -81,10 +82,6 @@
 		boolean go_<%=schemaName%> = true;
 <%
 		if("SINGLE".equals(type)) {
-			IMetadataColumn column = columns.get(0);
-%>
-			<%=connectionName%>.<%=column.getLabel()%> = documentExtractor_<%=cid%>.getSingleResult("<%=column.getLabel()%>");//String
-<%
 			continue;
 		}
 %>
@@ -97,19 +94,17 @@
 		}
 		
 		if("STRUCTURE".equals(type)) {
-%>
-			List<String> structure_<%=schemaName%> = documentExtractor_<%=cid%>.getStructureResult("<%=name%>",columnNames_<%=schemaName%>);
-<%
-			for(int i=0;i<columns.size();i++) {
-				IMetadataColumn column = columns.get(i);
-%>
-				<%=connectionName%>.<%=column.getLabel()%> = structure_<%=schemaName%>.get(<%=i%>);
-<%
-			}
-		} else if("TABLE".equals(type)) {
+			continue;
+		}
+		
+		if("TABLE".equals(type)) {
 %>
 			List<List<String>> table_<%=schemaName%> = documentExtractor_<%=cid%>.getTableResult("<%=name%>",columnNames_<%=schemaName%>);
 			go_<%=schemaName%> = (table_<%=schemaName%>!=null && table_<%=schemaName%>.size()>0);
+			Iterator<List<String>> tableIter_<%=schemaName%> = null;
+			if(go_<%=schemaName%>) {
+				tableIter_<%=schemaName%> = table_<%=schemaName%>.iterator();
+			}
 <%		
 		}
 	}
@@ -117,13 +112,14 @@
 
 	while(
 <%
-	while(outputParameters.hasNext()){
-		Map<String, Object> outputParameter = outputParameters.next();
+	Iterator<Map<String, Object>> iterator = outputParameters.iterator();
+	while(iterator.hasNext()){
+		Map<String, Object> outputParameter = iterator.next();
 		String schemaName = (String)outputParameter.get("SCHEMA");
 %>
 		go_<%=schemaName%>
 <%
-		if(outputParameters.hasNext()) {
+		if(iterator.hasNext()) {
 %>
 		||
 <%
@@ -138,13 +134,55 @@
 		String schemaName = (String)outputParameter.get("SCHEMA");
 		String connectionName = (String)outputParameter.get("CONNECTION"); 
 		List<IMetadataColumn> columns = (List<IMetadataColumn>)outputParameter.get("COLUMNS");
+%>
+		<%=connectionName%> = null; 
+<%
 		if("SINGLE".equals(type)) {
+			IMetadataColumn column = columns.get(0);
+%>
+			if(go_<%=schemaName%>) {
+				go_<%=schemaName%> = false;
+				<%=connectionName%> = new <%=connectionName%>Struct();
+				<%=connectionName%>.<%=column.getLabel()%> = documentExtractor_<%=cid%>.getSingleResult("<%=column.getLabel()%>");
+			}
+<%
+			continue;
+		}
 		
-		} else if("STRUCTURE".equals(type)) {
+		if("STRUCTURE".equals(type)) {
+%>
+			if(go_<%=schemaName%>) {
+				go_<%=schemaName%> = false;
+				List<String> structure_<%=schemaName%> = documentExtractor_<%=cid%>.getStructureResult("<%=name%>",columnNames_<%=schemaName%>);
+<%
+				for(int i=0;i<columns.size();i++) {
+					IMetadataColumn column = columns.get(i);
+%>
+					<%=connectionName%>.<%=column.getLabel()%> = structure_<%=schemaName%>.get(<%=i%>);
+<%
+				}
+%>
+			}
+<%
+			continue;
+		}
 		
-		} else if("TABLE".equals(type)) {
-		
+		if("TABLE".equals(type)) {
+%>
+			if(go_<%=schemaName%>) {
+				List<String> tableRow_<%=schemaName%> = tableIter_<%=schemaName%>.hasNext();
+<%
+				for(int i=0;i<columns.size();i++) {
+					IMetadataColumn column = columns.get(i);
+%>
+					<%=connectionName%>.<%=column.getLabel()%> = tableRow_<%=schemaName%>.get(<%=i%>);
+<%
+				}
+%>
+				go_<%=schemaName%> = tableIter_<%=schemaName%>.hasNext();
+			}
+<%
 		}
 	}
 %>
-	}
+	//}

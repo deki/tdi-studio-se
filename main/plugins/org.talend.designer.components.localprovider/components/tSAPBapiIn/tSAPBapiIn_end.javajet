@@ -24,42 +24,18 @@
 	
 	List< ? extends IConnection> conns = node.getOutgoingSortedConnections();
 	List<IConnection> connections = new java.util.ArrayList<IConnection>();
-	List<String> connNames = new java.util.ArrayList<String>(); 
 	
 	if(conns!=null){
 		for(int i=0;i<conns.size();i++){
 			IConnection conn = conns.get(i);
 		    if(conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
 		   		connections.add(conn);
-		   		connNames.add(conn.getName());
 		    }
 		}
 	}
 	
 	if(connections.isEmpty()) {
 		return "";
-	}
-
-	List<Map<String, String>> originalOutputParameters = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SCHEMAS__");
-	List<Map<String, Object>> outputParameters = new ArrayList<Map<String, Object>>();
-	
-	for(int i=0;i<connections.size();i++){
-		IConnection conn = connections.get(i);
-		IMetadataTable metadata = conn.getMetadataTable();
-		
-		for(Map<String, String> originalOutputParameter : originalOutputParameters){
-			String schemaName = TalendTextUtils.removeQuotes(originalOutputParameter.get("SCHEMA"));
-			if(metadata.getLabel().equals(schemaName)) {
-				Map<String, Object> outputParameter = new java.util.HashMap<String, Object>();
-				outputParameter.put("NAME", TalendTextUtils.removeQuotes(originalOutputParameter.get("NAME")));
-				outputParameter.put("TYPE", TalendTextUtils.removeQuotes(originalOutputParameter.get("TYPE")));
-				outputParameter.put("SCHEMA", schemaName);
-				List<IMetadataColumn> columns = metadata.getListColumns();
-				outputParameter.put("COLUMNS",columns);
-				outputParameters.add(outputParameter);
-				break;
-			}
-		}
 	}
 %>
 	}
