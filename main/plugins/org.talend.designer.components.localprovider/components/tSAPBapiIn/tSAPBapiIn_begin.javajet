@@ -85,7 +85,7 @@
 			continue;
 		}
 %>
-		List<String> columnNames_<%=schemaName%> = new ArrayList<String>();
+		List<String> columnNames_<%=schemaName%> = new java.util.ArrayList<String>();
 <%
 		for(IMetadataColumn column : columns) {
 %>
@@ -101,7 +101,7 @@
 %>
 			List<List<String>> table_<%=schemaName%> = documentExtractor_<%=cid%>.getTableResult("<%=name%>",columnNames_<%=schemaName%>);
 			go_<%=schemaName%> = (table_<%=schemaName%>!=null && table_<%=schemaName%>.size()>0);
-			Iterator<List<String>> tableIter_<%=schemaName%> = null;
+			java.util.Iterator<List<String>> tableIter_<%=schemaName%> = null;
 			if(go_<%=schemaName%>) {
 				tableIter_<%=schemaName%> = table_<%=schemaName%>.iterator();
 			}
@@ -153,6 +153,7 @@
 %>
 			if(go_<%=schemaName%>) {
 				go_<%=schemaName%> = false;
+				<%=connectionName%> = new <%=connectionName%>Struct();
 				List<String> structure_<%=schemaName%> = documentExtractor_<%=cid%>.getStructureResult("<%=name%>",columnNames_<%=schemaName%>);
 <%
 				for(int i=0;i<columns.size();i++) {
@@ -170,7 +171,8 @@
 		if("TABLE".equals(type)) {
 %>
 			if(go_<%=schemaName%>) {
-				List<String> tableRow_<%=schemaName%> = tableIter_<%=schemaName%>.hasNext();
+				<%=connectionName%> = new <%=connectionName%>Struct();
+				List<String> tableRow_<%=schemaName%> = tableIter_<%=schemaName%>.next();
 <%
 				for(int i=0;i<columns.size();i++) {
 					IMetadataColumn column = columns.get(i);
