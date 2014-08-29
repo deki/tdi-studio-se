@@ -54,30 +54,97 @@
 				outputParameter.put("NAME", TalendTextUtils.removeQuotes(originalOutputParameter.get("NAME")));
 				outputParameter.put("TYPE", TalendTextUtils.removeQuotes(originalOutputParameter.get("TYPE")));
 				outputParameter.put("SCHEMA", schemaName);
-				List<IMetadataColumn> columns = metadata.getListColumns();
 				outputParameter.put("COLUMNS",columns);
+				List<IMetadataColumn> columns = metadata.getListColumns();
+				outputParameter.put("CONNECTION",conn.getLabel());
 				outputParameters.add(outputParameter);
 				break;
 			}
 		}
 	}
 	
+	String sapFunction = ElementParameterParser.getValue(node,"__SAP_FUNCTION__");
+%>
+	org.dom4j.Document outputDocument_<%=cid%> = (org.dom4j.Document)globalMap.get("outputDocument_<%=graphicalUniqueName%>");
+	org.talend.sap.DocumentExtractor documentExtractor_<%=cid%> = new org.talend.sap.DocumentExtractor(outputDocument_<%=cid%>,<%=sapFunction%>);
+<%
 	for(Map<String, Object> outputParameter : outputParameters){
 		String name = (String)outputParameter.get("NAME");
 		String type = (String)outputParameter.get("TYPE");
+		String schemaName = (String)outputParameter.get("SCHEMA");
+		String connectionName = (String)outputParameter.get("CONNECTION"); 
 		List<IMetadataColumn> columns = (List<IMetadataColumn>)outputParameter.get("COLUMNS");
+		if(columns == null || columns.isEmpty()) {
+			continue;
+		}
+%>
+		boolean go_<%=schemaName%> = true;
+<%
+		if("SINGLE".equals(type)) {
+			IMetadataColumn column = columns.get(0);
+%>
+			<%=connectionName%>.<%=column.getLabel()%> = documentExtractor_<%=cid%>.getSingleResult("<%=column.getLabel()%>");//String
+<%
+			continue;
+		}
+%>
+		List<String> columnNames_<%=schemaName%> = new ArrayList<String>();
+<%
+		for(IMetadataColumn column : columns) {
+%>
+			columnNames_<%=schemaName%>.add("<%=column.getLabel()%>");
+<%
+		}
+		
+		if("STRUCTURE".equals(type)) {
+%>
+			List<String> structure_<%=schemaName%> = documentExtractor_<%=cid%>.getStructureResult("<%=name%>",columnNames_<%=schemaName%>);
+<%
+			for(int i=0;i<columns.size();i++) {
+				IMetadataColumn column = columns.get(i);
+%>
+				<%=connectionName%>.<%=column.getLabel()%> = structure_<%=schemaName%>.get(<%=i%>);
+<%
+			}
+		} else if("TABLE".equals(type)) {
+%>
+			List<List<String>> table_<%=schemaName%> = documentExtractor_<%=cid%>.getTableResult("<%=name%>",columnNames_<%=schemaName%>);
+			go_<%=schemaName%> = (table_<%=schemaName%>!=null && table_<%=schemaName%>.size()>0);
+<%		
+		}
 	}
 %>
-	org.dom4j.Document outputDocument_<%=cid%> = (org.dom4j.Document)globalMap.get("outputDocument_<%=graphicalUniqueName%>");
-	
-	//only a simulation
-	for(int i=0;i<10;i++) {
-		//row1 = null;
-		//row2 = null;
-		boolean isRow1 = false;
-		boolean isRow2 = false;
-		if(isRow1) {
-			//init row1
-		} else if(isRow2) {
-			//init row2
+
+	while(
+<%
+	while(outputParameters.hasNext()){
+		Map<String, Object> outputParameter = outputParameters.next();
+		String schemaName = (String)outputParameter.get("SCHEMA");
+%>
+		go_<%=schemaName%>
+<%
+		if(outputParameters.hasNext()) {
+%>
+		||
+<%
 		}
+	}
+%>
+	) {
+<%
+	for(Map<String, Object> outputParameter : outputParameters){
+		String name = (String)outputParameter.get("NAME");
+		String type = (String)outputParameter.get("TYPE");
+		String schemaName = (String)outputParameter.get("SCHEMA");
+		String connectionName = (String)outputParameter.get("CONNECTION"); 
+		List<IMetadataColumn> columns = (List<IMetadataColumn>)outputParameter.get("COLUMNS");
+		if("SINGLE".equals(type)) {
+		
+		} else if("STRUCTURE".equals(type)) {
+		
+		} else if("TABLE".equals(type)) {
+		
+		}
+	}
+%>
+	}
