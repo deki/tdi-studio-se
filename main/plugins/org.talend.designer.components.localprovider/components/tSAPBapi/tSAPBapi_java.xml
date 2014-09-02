@@ -161,6 +161,8 @@
       <IMPORT NAME="talendsap.jar" MODULE="talendsap.jar" REQUIRED="true" />
       <IMPORT NAME="sap-api-0.0.1-SNAPSHOT.jar" MODULE="sap-api-0.0.1-SNAPSHOT.jar" REQUIRED="true" BundleID="" />
       <IMPORT NAME="sap-impl-0.0.1-SNAPSHOT.jar" MODULE="sap-impl-0.0.1-SNAPSHOT.jar" REQUIRED="true" BundleID="" />
+      <IMPORT NAME="dom4j-1.6.1.jar" MODULE="dom4j-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.dom4j-jaxen/lib/dom4j-1.6.1.jar" REQUIRED="true" />
+      <IMPORT NAME="jaxen-1.1.1.jar" MODULE="jaxen-1.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.dom4j-jaxen/lib/jaxen-1.1.1.jar" REQUIRED="true" />
     </IMPORTS>
   </CODEGENERATION>
   

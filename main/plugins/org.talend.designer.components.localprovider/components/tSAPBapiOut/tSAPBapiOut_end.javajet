@@ -40,15 +40,16 @@ imports="
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
 
 	java.util.Properties properties_<%=cid%> = new java.util.Properties();
-	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_APPLICATION_SERVER_HOST, <%=hostname%>);
 	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_CLIENT, <%=client%>);
 	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_USER, <%=userid%>);
 	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_PASSWORD, decryptedPassword_<%=cid%>);
 	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_LANGUAGE, <%=language%>);
 
 	<%if("ApplicationServer".equals(serverType)){%>
+	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_APPLICATION_SERVER_HOST, <%=hostname%>);
 	properties_<%=cid%>.put(org.talend.sap.ISAPConnection.PROP_SYSTEM_NUMBER, <%=systemnumber%>);
 	<%}else{%>
+	properties_<%=cid%>.put("jco.client.mshost", <%=hostname%>);
 	properties_<%=cid%>.put("jco.client.r3name", <%=systemId%>);
 	properties_<%=cid%>.put("jco.client.group", <%=groupName%>);
 	<%}%>
