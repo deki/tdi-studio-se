@@ -141,6 +141,13 @@ public class ExternalController extends AbstractElementPropertySectionController
             data.right = new FormAttachment(labelLabel, STANDARD_BUTTON_WIDTH, SWT.RIGHT);
         }
         data.top = new FormAttachment(0, top);
+        labelLabel.pack();
+        btnEdit.pack();
+        int labelHeight = labelLabel.getSize().y;
+        int btnHeight = btnEdit.getSize().y;
+        if (labelHeight < btnHeight) {
+            data.height = labelHeight;
+        }
         btnEdit.setLayoutData(data);
         // **************************
         hashCurControls.put(param.getName(), btnEdit);
