@@ -68,6 +68,7 @@
 %>
 	org.dom4j.Document outputDocument_<%=cid%> = (org.dom4j.Document)globalMap.get("outputDocument_<%=graphicalUniqueName%>");
 	org.talend.sap.DocumentExtractor documentExtractor_<%=cid%> = new org.talend.sap.DocumentExtractor(outputDocument_<%=cid%>,<%=sapFunction%>);
+	String stringValue_<%=cid%> = null;
 <%
 	for(Map<String, Object> outputParameter : outputParameters){
 		String name = (String)outputParameter.get("NAME");
@@ -110,6 +111,8 @@
 	}
 %>
 
+	<%@ include file="./ColumnValueParser.javajet"%>
+
 	while(
 <%
 	Iterator<Map<String, Object>> iterator = outputParameters.iterator();
@@ -143,7 +146,8 @@
 			if(go_<%=schemaName%>) {
 				go_<%=schemaName%> = false;
 				<%=connectionName%> = new <%=connectionName%>Struct();
-				<%=connectionName%>.<%=column.getLabel()%> = documentExtractor_<%=cid%>.getSingleResult("<%=column.getLabel()%>");
+				stringValue_<%=cid%> = documentExtractor_<%=cid%>.getSingleResult("<%=column.getLabel()%>");
+				<%=connectionName%>.<%=column.getLabel()%> = <%columnValueParser.parse("stringValue_" + cid,column);%>;
 			}
 <%
 			continue;
@@ -159,7 +163,8 @@
 				for(int i=0;i<columns.size();i++) {
 					IMetadataColumn column = columns.get(i);
 %>
-					<%=connectionName%>.<%=column.getLabel()%> = structure_<%=schemaName%>.get(<%=i%>);
+					stringValue_<%=cid%> = structure_<%=schemaName%>.get(<%=i%>);
+					<%=connectionName%>.<%=column.getLabel()%> = <%columnValueParser.parse("stringValue_" + cid,column);%>;
 <%
 				}
 %>
@@ -177,7 +182,8 @@
 				for(int i=0;i<columns.size();i++) {
 					IMetadataColumn column = columns.get(i);
 %>
-					<%=connectionName%>.<%=column.getLabel()%> = tableRow_<%=schemaName%>.get(<%=i%>);
+					stringValue_<%=cid%> = tableRow_<%=schemaName%>.get(<%=i%>);
+					<%=connectionName%>.<%=column.getLabel()%> = <%columnValueParser.parse("stringValue_" + cid,column);%>;
 <%
 				}
 %>

@@ -4,6 +4,8 @@ imports="
     org.talend.core.model.process.ElementParameterParser
     org.talend.core.model.metadata.IMetadataTable
     org.talend.core.model.metadata.IMetadataColumn
+    org.talend.core.model.metadata.types.JavaTypesManager
+    org.talend.core.model.metadata.types.JavaType
     org.talend.designer.codegen.config.CodeGeneratorArgument
     org.talend.core.model.process.IConnection
     org.talend.core.model.process.IConnectionCategory
@@ -38,8 +40,9 @@ imports="
 %>
 	org.talend.sap.DocumentHelper documentHelper_<%=cid%> = new org.talend.sap.DocumentHelper(); 
 	documentHelper_<%=cid%>.setFunctionName(<%=sapFunction%>);
-<%
 	
+	<%@ include file="./ColumnValueFormatter.javajet"%>
+<%
 	for(Map<String, String> originalInputParameter : originalInputParameters){
 		Map<String, String> inputParameter = new java.util.HashMap<String, String>();
 		inputParameter.put("NAME", TalendTextUtils.removeQuotes(originalInputParameter.get("NAME")));
@@ -70,7 +73,7 @@ imports="
 		if("SINGLE".equals(type)) {
 			IMetadataColumn column = columns.get(0);
 %>
-			documentHelper_<%=cid%>.addSingleParameter("<%=column.getLabel()%>",<%=column.getDefault()%>);
+			documentHelper_<%=cid%>.addSingleParameter("<%=column.getLabel()%>",<%columnValueFormatter.format(column.getDefault(),column);%>);
 <%
 		} else if("STRUCTURE".equals(type)) {
 %>
@@ -78,7 +81,7 @@ imports="
 <%
 			for(IMetadataColumn column : columns) {
 %>
-			documentHelper_<%=cid%>.addStructChildParameter("<%=column.getLabel()%>",<%=column.getDefault()%>);
+			documentHelper_<%=cid%>.addStructChildParameter("<%=column.getLabel()%>",<%columnValueFormatter.format(column.getDefault(),column);%>);
 <%
 			}
 		} else if("TABLE".equals(type)) {

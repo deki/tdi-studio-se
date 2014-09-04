@@ -1,0 +1,31 @@
+<%
+	class ColumnValueParser {
+		
+		public void parse(String valueExpression,IMetadataColumn column) {
+			String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
+			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+			String pattern = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+			
+			if(javaType == JavaTypesManager.STRING || javaType == JavaTypesManager.OBJECT){
+%>
+				<%=valueExpression%>
+<%
+			} else if(javaType == JavaTypesManager.DATE) {
+%>
+				ParserUtils.parseTo_Date(<%=valueExpression%>, <%=pattern %>)
+<%
+			} else if(javaType == JavaTypesManager.BYTE_ARRAY) {
+%>
+				<%=valueExpression%>.getBytes()
+<%
+			} else {
+%>
+				ParserUtils.parseTo_<%= typeToGenerate %>(<%=valueExpression%>)
+<%
+			}
+		}
+		
+	}
+	
+	ColumnValueParser columnValueParser = new ColumnValueParser();
+%>

@@ -1,0 +1,35 @@
+<%
+	class ColumnValueFormatter {
+		
+		public void format(String valueExpression, IMetadataColumn column) {
+			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+			String pattern = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+			//boolean isPrimitive = JavaTypesManager.isJavaPrimitiveType( column.getTalendType(), column.isNullable());
+			
+			if(javaType == JavaTypesManager.STRING){
+%>
+				<%=valueExpression %>
+<%
+			} else if(javaType == JavaTypesManager.DATE) {
+%>
+				FormatterUtils.format_Date(<%=valueExpression%>, <%= pattern %>)
+<%
+			} else if(javaType == JavaTypesManager.BIGDECIMAL) {
+%>
+				<%=column.getPrecision() == null? valueExpression : valueExpression + ".setScale(" + column.getPrecision() + ", java.math.RoundingMode.HALF_UP)" %>.toPlainString()
+<%
+			} else if(javaType == JavaTypesManager.BYTE_ARRAY) {
+%>
+				java.nio.charset.Charset.defaultCharset().decode(java.nio.ByteBuffer.wrap(<%=valueExpression%>)).toString()
+<%
+			} else {
+%>
+				String.valueOf(<%=valueExpression%>)
+<%
+			}
+		}
+		
+	}
+	
+	ColumnValueFormatter columnValueFormatter = new ColumnValueFormatter();
+%>
