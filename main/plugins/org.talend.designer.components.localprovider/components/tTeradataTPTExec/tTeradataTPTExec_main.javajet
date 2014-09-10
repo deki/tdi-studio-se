@@ -37,7 +37,7 @@ String execution= ElementParameterParser.getValue(node, "__EXECUTION__");
 String loadFile= ElementParameterParser.getValue(node, "__LOAD_FILE__");
 String separator= ElementParameterParser.getValue(node, "__FIELD_SEPARATOR__");
 String errorFile= ElementParameterParser.getValue(node, "__ERROR_FILE__");
-String beginLoad= ElementParameterParser.getValue(node, "__BEGINLOAD_ADVANCEDPARAM__");
+
 boolean returnCodeDie= "true".equals(ElementParameterParser.getValue(node, "__RETURN_CODE_DIE__"));
 String returnCode= ElementParameterParser.getValue(node, "__RETURN_CODE__");
 boolean specifyLogTable= "true".equals(ElementParameterParser.getValue(node, "__SPECIFY_LOG_TABLE__"));
