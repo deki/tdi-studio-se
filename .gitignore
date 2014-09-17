@@ -3,3 +3,6 @@ bin/
 target/
 class/
 classes/
+*.iml
+.idea
+atlassian-ide-plugin.xml
