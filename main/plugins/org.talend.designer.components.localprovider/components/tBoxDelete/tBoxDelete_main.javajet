@@ -37,7 +37,15 @@ imports="
 		
 		final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 				log4jFileUtil.componentStartInfo(node);
-				log4jFileUtil.logParameters(node);
+		String dataInputConnection = null;
+        
+        List< ? extends IConnection> inputConnections = node.getIncomingConnections();
+	    for(IConnection conn : inputConnections) {
+	        if(conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+	        	dataInputConnection = conn.getName();
+	        	break;
+	        } // if(conn) end
+	    } // for(conns) end
 
 %>
 <%
@@ -76,7 +84,80 @@ if(!"true".equals(useExistingConn)){
 <%
 }
 %>
-<%if(!deleteFolder)
+
+<%if(dataInputConnection != null)
+{%>
+	try
+	{
+		String <%=cid%>_filePath = <%=dataInputConnection%>.filePath;
+		String <%=cid%>_type = <%=dataInputConnection%>.type;
+		if (<%=cid%>_filePath == null || "".equals(<%=cid%>_filePath.trim()))
+		{
+			throw new Exception("File path can not be null");
+		}
+		if (<%=cid%>_type == null || "".equals(<%=cid%>_type.trim()))
+		{
+			throw new Exception("Type can not be null");
+		}
+		if(!<%=cid%>_type.equalsIgnoreCase("file") || !<%=cid%>_type.equalsIgnoreCase("folder"))
+		{
+			throw new Exception("Type should be one of "\"" + "file" + "\"" + " or " + "\"" + "folder "\"");
+		}
+		if(<%=cid%>_type.equalsIgnoreCase("file"))
+		{
+			String <%=cid%>_remoteFilePath = normalizePath(<%=cid%>_filePath);
+			String <%=cid%>_remoteFileName = getFolderFromPath(<%=cid%>_remoteFilePath);
+			com.box.boxjavalibv2.dao.BoxFile <%=cid%>_boxFile = null;
+			<%=cid%>_boxFile = searchFile(<%=cid%>_client, <%=cid%>_remoteFilePath, <%=cid%>_remoteFileName);
+			if (<%=cid%>_boxFile == null)
+			{
+				throw new Exception("No file found under " + <%=cid%>_remoteFilePath);
+			}
+			<%=cid%>_client.getFilesManager().deleteFile(<%=cid%>_boxFile.getId(), null);
+			globalMap.put("<%=cid %>_REMOVED_PATH", getBoxItemPath(<%=cid%>_boxFile));
+		}
+		else if (<%=cid%>_type.equalsIgnoreCase("folder"))
+		{
+			String <%=cid%>_remoteFolderPath = normalizePath(<%=cid%>_filePath);
+			if (<%=cid%>_remoteFolderPath.equals("All Files"))
+			{
+				throw new Exception("Can not delete root folder");
+			}
+			String <%=cid%>_remoteFolderName = getFolderFromPath(<%=cid%>_remoteFolderPath);
+			com.box.boxjavalibv2.dao.BoxFolder <%=cid%>_boxFolder = null;
+			<%=cid%>_boxFolder = searchFolder(<%=cid%>_client, <%=cid%>_remoteFolderPath, <%=cid%>_remoteFolderName);
+			if (<%=cid%>_boxFolder == null)
+			{
+				throw new Exception("No folder found under " + <%=cid%>_remoteFolderPath);
+			}
+			com.box.boxjavalibv2.requests.requestobjects.BoxFolderDeleteRequestObject <%=cid%>_delObject = com.box.boxjavalibv2.requests.requestobjects.BoxFolderDeleteRequestObject.deleteFolderRequestObject(true);
+	        <%=cid%>_client.getFoldersManager().deleteFolder(<%=cid%>_boxFolder.getId(), <%=cid%>_delObject);
+	        globalMap.put("<%=cid %>_REMOVED_PATH", getBoxItemPath(<%=cid%>_boxFolder));
+		}
+	}
+	catch (java.lang.Exception e)
+	{
+<%
+		if(dieOnError) {
+%>
+			throw e;
+<%
+		} else {
+%>
+<%
+			if(isLog4jEnabled){
+%>
+				log.error("<%=cid%> - " +e.getMessage());
+<%
+			}
+%>
+			System.err.println(e);
+<%
+		}
+%>
+	}
+<%}%>
+<% else if(!deleteFolder)
 {
 %>
 	try

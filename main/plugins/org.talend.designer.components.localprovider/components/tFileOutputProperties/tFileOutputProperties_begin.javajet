@@ -18,7 +18,6 @@ String append = ElementParameterParser.getValue(node,"__APPEND__");
 String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
 
 log4jFileUtil.componentStartInfo(node);
-log4jFileUtil.logParameters(node);
 %>
 java.io.File file_<%=cid%> = new java.io.File(<%=filename%>);
 java.io.File parent_<%=cid%> = file_<%=cid%>.getParentFile();

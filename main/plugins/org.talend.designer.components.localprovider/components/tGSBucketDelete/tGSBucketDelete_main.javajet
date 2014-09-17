@@ -20,7 +20,6 @@
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
 	org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = null;
 	try {
@@ -106,6 +105,4 @@
 		}
 		%>
 	}
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

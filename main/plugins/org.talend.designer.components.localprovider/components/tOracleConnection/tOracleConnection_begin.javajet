@@ -74,8 +74,7 @@ imports="
 <%
 			} else {
 %>
-<%
-%>
+
 				conn_<%=cid%> = <%=shareDBClass%>.getDBConnection("<%=this.getDirverClassName(node)%>",url_<%=cid%>,dbUser_<%=cid%> , dbPwd_<%=cid%> , sharedConnectionName_<%=cid%>);
 
 <%

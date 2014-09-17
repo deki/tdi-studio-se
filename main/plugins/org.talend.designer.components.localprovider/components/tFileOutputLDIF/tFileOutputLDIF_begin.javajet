@@ -20,8 +20,6 @@ imports="
         boolean isAppend = ("true").equals(ElementParameterParser.getValue(node,"__APPEND__"));
         
         log4jFileUtil.componentStartInfo(node);
-        log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("MODIFYCONFIG"));
-        log4jFileUtil.logParameters(node);
 %>
 
 java.io.File file_<%=cid %> = new java.io.File(<%=filename %>); 

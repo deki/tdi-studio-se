@@ -13,7 +13,7 @@
 	
 <%
 boolean hasBox = false;
-
+boolean hasBoxPut = false;
 CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 Vector v = (Vector) codeGenArgument.getArgument();
 IProcess process = (IProcess)v.get(0);
@@ -22,14 +22,20 @@ List<? extends INode> tBoxCreateList = process.getNodesOfType("tBoxCreate");
 List<? extends INode> tBoxGetList = process.getNodesOfType("tBoxGet");
 List<? extends INode> tBoxListList = process.getNodesOfType("tBoxList");
 List<? extends INode> tBoxCopyList = process.getNodesOfType("tBoxCopy");
-List<? extends INode> tBoxUploadList = process.getNodesOfType("tBoxUpload");
+List<? extends INode> tBoxUploadList = process.getNodesOfType("tBoxPut");
 List<? extends INode> tBoxDeleteList = process.getNodesOfType("tBoxDelete");
+
+if (tBoxUploadList != null && tBoxUploadList.size() > 0)
+{
+	hasBoxPut = true;
+}
 
 if((tBoxCreateList != null && tBoxCreateList.size() > 0) || (tBoxGetList != null && tBoxGetList.size() > 0)
 	|| (tBoxListList != null && tBoxListList.size() > 0) || (tBoxCopyList != null && tBoxCopyList.size() > 0)
-	|| (tBoxUploadList != null && tBoxUploadList.size() > 0) || (tBoxDeleteList != null && tBoxDeleteList.size() > 0)){
+	|| hasBoxPut || (tBoxDeleteList != null && tBoxDeleteList.size() > 0)){
 	hasBox = true;
 }
+
 
 if(hasBox){
 %>	
@@ -134,7 +140,88 @@ if(hasBox){
 		}
 		return null;
 	}
+	
+	private java.util.List<com.box.boxjavalibv2.dao.BoxItem> getChildrenRecursively(com.box.boxjavalibv2.BoxClient client, com.box.boxjavalibv2.dao.BoxFolder folder,
+					 java.util.List<com.box.boxjavalibv2.dao.BoxItem> list, boolean withFolders, boolean withFiles) throws Exception
+	{
+		if (folder != null)
+		{
+			for (com.box.boxjavalibv2.dao.BoxTypedObject obj : folder.getItemCollection().getEntries())
+			{
+				if (withFolders && withFiles)
+				{
+					if(obj.getType().equals("folder"))
+					{
+						com.box.boxjavalibv2.dao.BoxFolder boxFolder = client.getFoldersManager().getFolder(obj.getId(), null);
+						list.add(boxFolder);
+						getChildrenRecursively(client, boxFolder, list, withFolders, withFiles);
+					}
+					if (obj.getType().equals("file"))
+					{
+						com.box.boxjavalibv2.dao.BoxFile file = client.getFilesManager().getFile(obj.getId(), null);
+						list.add(file);
+					}
+				}
+				else if (withFolders)
+				{
+					if(obj.getType().equals("folder"))
+					{
+						com.box.boxjavalibv2.dao.BoxFolder boxFolder = client.getFoldersManager().getFolder(obj.getId(), null);
+						list.add(boxFolder);
+						getChildrenRecursively(client, boxFolder, list, withFolders, withFiles);
+					}
+				}
+				else if (withFiles)
+				{
+					if(obj.getType().equals("folder"))
+					{
+						com.box.boxjavalibv2.dao.BoxFolder boxFolder = client.getFoldersManager().getFolder(obj.getId(), null);
+						getChildrenRecursively(client, boxFolder, list, withFolders, withFiles);
+					}
+					if (obj.getType().equals("file"))
+					{
+						com.box.boxjavalibv2.dao.BoxFile file = client.getFilesManager().getFile(obj.getId(), null);
+						list.add(file);
+					}
+				}
+			}
+		}
+		return list;
+	}
 
 <%
 }
 %>
+<%if(hasBoxPut)
+{%>
+	private com.box.boxjavalibv2.dao.BoxFolder createSubDirectories(com.box.boxjavalibv2.BoxClient client, com.box.boxjavalibv2.dao.BoxFolder folder, String path) throws Exception
+	{
+		com.box.boxjavalibv2.dao.BoxFolder destinationFolder = null;
+		if (path != null && !path.isEmpty())
+		{
+			String[] parts = path.split("/");
+			if (parts.length > 0)
+			{
+				boolean exists = false;
+				for (com.box.boxjavalibv2.dao.BoxTypedObject obj : folder.getItemCollection().getEntries())
+				{
+					if (obj.getValue("name").equals(parts[0]))
+					{
+						exists = true;
+						destinationFolder = client.getFoldersManager().getFolder(obj.getId(), null);
+						if (parts.length > 1)
+							destinationFolder = createSubDirectories(client, destinationFolder, path.substring(parts[0].length() + 1, path.length()));
+					}
+				}
+				if(!exists)
+				{
+					com.box.boxjavalibv2.requests.requestobjects.BoxFolderRequestObject folderRequestObj = com.box.boxjavalibv2.requests.requestobjects.BoxFolderRequestObject.createFolderRequestObject(parts[0], folder.getId());
+					destinationFolder = client.getFoldersManager().createFolder(folderRequestObj);
+					if (parts.length > 1)
+						destinationFolder = createSubDirectories(client, destinationFolder, path.substring(parts[0].length() + 1, path.length()));
+				}
+			}
+		}
+		return destinationFolder;
+	}
+<%}%>

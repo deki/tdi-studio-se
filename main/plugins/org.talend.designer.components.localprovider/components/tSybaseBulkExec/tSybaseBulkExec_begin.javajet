@@ -112,10 +112,6 @@ if(useExistingConnection) {
     	java.sql.Connection conn_<%=cid %> = null;
     	
 		<%
-		List<String> ignoreParamList = new ArrayList<String>();
-		ignoreParamList.add("ENCODING");
-		ignoreParamList.add("SYBASE_ENCODING");
-		log4jCodeGenerateUtil.setIgnoredParamsList(ignoreParamList);
 		log4jCodeGenerateUtil.debugConnectionParams(node);
 		log4jCodeGenerateUtil.connect(node);
 	}

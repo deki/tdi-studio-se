@@ -28,5 +28,4 @@
 
 <%
 log4jFileUtil.writeDataFinishInfo(node);
-log4jFileUtil.componentFinishInfo(node);
 %>	

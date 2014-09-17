@@ -32,5 +32,4 @@ imports="
 		log.info("<%=cid%> - Retrieved buckets count: " + nb_bucket_<%=cid%> + " .");
 	<%		
 	}
-	log4jFileUtil.componentFinishInfo(node);
 	%>

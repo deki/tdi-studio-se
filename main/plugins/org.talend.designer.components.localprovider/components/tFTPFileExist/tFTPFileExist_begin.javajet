@@ -38,8 +38,6 @@ boolean sftp = false;
 
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 log4jFileUtil.componentStartInfo(node);
-log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("PASSWORD","PRIVATEKEY","PASSPHRASE","PROXY_PASSWORD"));
-log4jFileUtil.logParameters(node); 
 if (("true").equals(useExistingConn)) {
   List<? extends INode> nodeList = node.getProcess().getGeneratingNodes();
 

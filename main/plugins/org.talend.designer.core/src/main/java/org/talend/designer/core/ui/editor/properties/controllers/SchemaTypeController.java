@@ -1001,19 +1001,20 @@ public class SchemaTypeController extends AbstractRepositoryController {
                     connection = MetadataToolHelper.getConnectionFromRepository(value);
 
                     // For SAP see bug 5423
-                    if (((Node) elem).getUniqueName().startsWith("tSAP") && !((Node) elem).getUniqueName().startsWith("tSAPHana")) { //$NON-NLS-1$
+                    String functionId = node.getParent().getId();
+                    if (((Node) elem).getUniqueName().startsWith("tSAP") && !((Node) elem).getUniqueName().startsWith("tSAPHana")//$NON-NLS-1$//$NON-NLS-2$
+                            && functionId != "-1") {//$NON-NLS-1$
                         Node sapNode = (Node) elem;
-                        String functionId = node.getParent().getId();
                         repositoryMetadata = getMetadataFromRepository(id, functionId, name);
 
-                        String tableName = repositoryMetadata.getLabel();
                         String functionName = node.getParent().getObject().getLabel();
                         for (IElementParameter param : sapNode.getElementParameters()) {
                             SAPParametersUtils.retrieveSAPParams(elem, connection, param, functionName);
                         }
-                    } else {
-                        repositoryMetadata = MetadataToolHelper.getMetadataFromRepository(value);
                     }
+                    // else {
+                    // repositoryMetadata = MetadataToolHelper.getMetadataFromRepository(value);
+                    // }
                     // connection = MetadataTool.getConnectionFromRepository(value);
 
                     // For validation rule.

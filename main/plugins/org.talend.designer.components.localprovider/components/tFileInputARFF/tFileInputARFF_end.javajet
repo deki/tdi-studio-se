@@ -23,5 +23,4 @@ String cid = node.getUniqueName();
 		
 <%
 log4jFileUtil.retrievedDataNumberInfo(node);
-log4jFileUtil.componentFinishInfo(node);
 %>

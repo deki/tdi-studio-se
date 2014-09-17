@@ -25,7 +25,4 @@
 		}
 <%
 	}
-	if(isLog4jEnabled){
-		log4jFileUtil.componentFinishInfo(node);
-	}
 %>

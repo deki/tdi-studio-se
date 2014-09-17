@@ -14,8 +14,6 @@
 	String cid = node.getUniqueName();
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	log4jFileUtil.componentStartInfo(node);  
-	log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("PASS"));
-	log4jFileUtil.logParameters(node); 
 
     boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
 
@@ -182,4 +180,3 @@ if(("CREATE").equals(sCubeAction)){
 %>
 globalMap.put("<%=cid %>_CUBENAME",<%=sCubeName%>);
 
-	<%log4jFileUtil.componentFinishInfo(node);%>

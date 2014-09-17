@@ -59,7 +59,6 @@ if ((metadatas!=null)&&(metadatas.size()>0)) {
           <%                    }
                          //   }
                         //}
-                        log4jFileUtil.collectRetriveData(conn.getName(),column.getLabel(),colNum,columnList.size());
                         colNum++;
                  }
                 }

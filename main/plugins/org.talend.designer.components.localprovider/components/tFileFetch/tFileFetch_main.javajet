@@ -14,8 +14,6 @@ CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 INode node = (INode)codeGenArgument.getArgument();
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 log4jFileUtil.componentStartInfo(node);
-log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("SMB_PASSWORD","PROXY_PASSWORD","AUTH_PASSWORD"));
-log4jFileUtil.logParameters(node); 
 String cid = node.getUniqueName();
 String protocol = ElementParameterParser.getValue(node, "__PROTO__");
 String directory = ElementParameterParser.getValue(node, "__DIRECTORY__");
@@ -637,4 +635,3 @@ if ("http".equals(protocol) || "https".equals(protocol)) {
 	}
 <%}%>
 globalMap.put("<%=cid%>_INPUT_STREAM", retIS_<%=cid%>);
-<%log4jFileUtil.componentFinishInfo(node);%>

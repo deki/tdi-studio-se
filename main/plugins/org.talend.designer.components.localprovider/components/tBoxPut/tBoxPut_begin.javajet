@@ -30,13 +30,14 @@ imports="
 		String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 	    String connectionKey = "\"conn_" + connection+"\"";
 		
-		String folderName = ElementParameterParser.getValue(node, "__DIRECTORY__");
+		String boxPath = ElementParameterParser.getValue(node, "__PATH__");
+		String filePath = ElementParameterParser.getValue(node, "__FILE_PATH__");
 		
+		String exposeOutput = ElementParameterParser.getValue(node, "__EXPOSE_OUTPUT_STREAM__");
 		boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 		
 		final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 				log4jFileUtil.componentStartInfo(node);
-				log4jFileUtil.logParameters(node);
 %>
 <%
 if(!"true".equals(useExistingConn)){
@@ -74,69 +75,18 @@ if(!"true".equals(useExistingConn)){
 <%
 }
 %>
-	String <%=cid%>_folder = normalizePath(<%=folderName%>);
-	String <%=cid%>_name = getFolderFromPath(<%=cid%>_folder);
-	String <%=cid%>_rootFolder = <%=cid%>_folder.substring(0, <%=cid%>_folder.length() - <%=cid%>_name.length() - 1);
-	String  <%=cid%>_rootName = getFolderFromPath(<%=cid%>_rootFolder);
+	String <%=cid%>_filePath = normalizePath(<%=filePath%>);
+	String <%=cid%>_remotePath = normalizePath(<%=boxPath%>);
+	boolean <%=cid%>_hasError = false;
+	String <%=cid%>_remoteName = getFolderFromPath(<%=cid%>_remotePath);
+	
+	com.box.boxjavalibv2.dao.BoxFile <%=cid%>_boxFile = null;
 	com.box.boxjavalibv2.dao.BoxFolder <%=cid%>_boxFolder = null;
-	com.box.restclientv2.requestsbase.BoxDefaultRequestObject <%=cid%>_requestObject = new com.box.restclientv2.requestsbase.BoxDefaultRequestObject();
-	System.out.println("Searching for folder " + <%=cid%>_folder);
+<%if("true".equals(exposeOutput)){%>
+	java.io.ByteArrayOutputStream <%=cid%>_uploader_output = new java.io.ByteArrayOutputStream();
+	java.io.ByteArrayInputStream <%=cid%>_uploader_input = null;
+	globalMap.put("<%=cid%>_OUTPUTSTREAM", <%=cid%>_uploader_output);
 	try
 	{
-		<%=cid%>_boxFolder = searchFolder(<%=cid%>_client, <%=cid%>_rootName, <%=cid%>_rootName);
-	}
-	catch (java.lang.Exception e)
-	{
-<%
-		if(dieOnError) {
-%>
-			throw e;
-<%
-		} else {
-%>
-<%
-			if(isLog4jEnabled){
-%>
-				log.error("<%=cid%> - " +e.getMessage());
-<%
-			}
-%>
-			System.err.println(e);
-<%
-		}
-%>
-	}
-		try
-		{
-			if (<%=cid%>_boxFolder == null)
-				throw new Exception("Root folder " + <%=cid%>_rootName + " doesn't exist");
-			com.box.boxjavalibv2.requests.requestobjects.BoxFolderRequestObject <%=cid%>_fRequest = com.box.boxjavalibv2.requests.requestobjects.BoxFolderRequestObject.createFolderRequestObject(<%=cid%>_name, <%=cid%>_boxFolder.getId());
-        	<%=cid%>_boxFolder = <%=cid%>_client.getFoldersManager().createFolder(<%=cid%>_fRequest);
-        }
-		catch (java.lang.Exception e)
-		{
-<%
-			if(dieOnError) {
-%>
-				throw e;
-<%
-			} else {
-%>
-<%
-				if(isLog4jEnabled){
-%>
-					log.error("<%=cid%> - " +e.getMessage());
-<%
-				}
-%>
-				System.err.println(e);
-<%
-			}
-%>
-		}  
-
-	//System.out.println(<%=cid%>_client.getAuthData().getRefreshToken());
-    //System.out.println(<%=cid%>_client.getAuthData().getAccessToken());
-
-	//}	
+<%}%>
 			

@@ -616,6 +616,9 @@ public class Process extends Element implements IProcess2, IGEFProcess, ILastVer
     public void removeNodeContainer(final NodeContainer nodeContainer) {
         String uniqueName = nodeContainer.getNode().getUniqueName();
         removeUniqueNodeName(uniqueName);
+        if (nodeContainer instanceof JobletContainer) {
+            removeUniqueNodeNamesInJoblet((JobletContainer) nodeContainer);
+        }
         removeNode(uniqueName);
         Element toRemove = nodeContainer;
         List<Element> toAdd = new ArrayList<Element>();
@@ -637,6 +640,23 @@ public class Process extends Element implements IProcess2, IGEFProcess, ILastVer
         elem.addAll(toAdd);
 
         // fireStructureChange(NEED_UPDATE_JOB, elem);
+    }
+
+    private void removeUniqueNodeNamesInJoblet(JobletContainer jobletContainer) {
+        List<NodeContainer> nodeContainers = jobletContainer.getNodeContainers();
+        if (nodeContainers == null) {
+            return;
+        }
+        Iterator<NodeContainer> iter = nodeContainers.iterator();
+        while (iter.hasNext()) {
+            NodeContainer nodeContainer = iter.next();
+            if (nodeContainer instanceof JobletContainer) {
+                removeUniqueNodeNamesInJoblet((JobletContainer) nodeContainer);
+            } else {
+                String uniqueName = nodeContainer.getNode().getUniqueName();
+                removeUniqueNodeName(uniqueName);
+            }
+        }
     }
 
     /**

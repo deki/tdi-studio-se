@@ -26,6 +26,4 @@ imports="
 	}
 	%>
 	globalMap.put("<%=cid%>_NB_BUCKET", nb_bucket_<%=cid%>);
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

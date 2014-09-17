@@ -58,7 +58,6 @@
 <%
 				}
 				
-				log4jFileUtil.componentFinishInfo(node);
 			}
 		}
 	}

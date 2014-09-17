@@ -148,7 +148,7 @@ public class JobJavaScriptOSGIForESBManager extends JobJavaScriptsManager {
                     jobVersion = getSelectedJobVersion();
                 }
                 ERepositoryObjectType type = ERepositoryObjectType.getItemType(processItem);
-                if (type.equals(ERepositoryObjectType.PROCESS)) {
+                if (type.equals(ERepositoryObjectType.PROCESS) || "MR".equals(type.getAlias())) {
                     itemType = JOB;
                 } else {
                     itemType = ROUTE;
@@ -427,12 +427,7 @@ public class JobJavaScriptOSGIForESBManager extends JobJavaScriptsManager {
         return targetFile.toURI().toURL();
     }
 
-    // private String getPluginResourceUri(String resourcePath) throws IOException {
-    // final Bundle b = Platform.getBundle(RepositoryPlugin.PLUGIN_ID);
-    // return FileLocator.toFileURL(FileLocator.find(b, new Path(resourcePath), null)).getFile();
-    // }
-
-    private static Map<String, Object> collectJobInfo(ProcessItem processItem, IProcess process) {
+    private Map<String, Object> collectJobInfo(ProcessItem processItem, IProcess process) {
         // velocity template context
         Map<String, Object> jobInfo = new HashMap<String, Object>();
 
@@ -444,11 +439,9 @@ public class JobJavaScriptOSGIForESBManager extends JobJavaScriptsManager {
         String jobName = name;
         if (!EmfModelUtils.getComponentsByName(processItem, "tRouteInput").isEmpty()) { //$NON-NLS-1$
             jobName = className;
-        } else if (isTalendStepTemplate) {
-            jobName = "${artifactID}"; //$NON-NLS-1$
         }
         jobInfo.put("name", jobName);
-        jobInfo.put("version", processItem.getProperty().getVersion()); //$NON-NLS-1$
+        jobInfo.put("version", getBundleVersion()); //$NON-NLS-1$
         jobInfo.put("className", className); //$NON-NLS-1$
 
         // additional Talend job interfaces (ESB related)
@@ -759,20 +752,14 @@ public class JobJavaScriptOSGIForESBManager extends JobJavaScriptsManager {
         Jar bin = new Jar(classesLocation);
         analyzer.setJar(bin);
 
-        String symbolicName;
         String bundleName = processItem.getProperty().getLabel();
-        if (isTalendStepTemplate(processItem)) {
-            bundleName += '_' + processItem.getProperty().getVersion();
-            symbolicName = "${artifactID}"; //$NON-NLS-1$
-        } else {
-            symbolicName = processItem.getProperty().getLabel();
-            // http://jira.talendforge.org/browse/TESB-5382 LiXiaopeng
-            Project project = ProjectManager.getInstance().getCurrentProject();
-            if (project != null) {
-                String proName = project.getLabel();
-                if (proName != null) {
-                    symbolicName = proName.toLowerCase() + '.' + symbolicName;
-                }
+        String symbolicName = processItem.getProperty().getLabel();
+        // http://jira.talendforge.org/browse/TESB-5382 LiXiaopeng
+        Project project = ProjectManager.getInstance().getCurrentProject();
+        if (project != null) {
+            String proName = project.getLabel();
+            if (proName != null) {
+                symbolicName = proName.toLowerCase() + '.' + symbolicName;
             }
         }
         analyzer.setProperty(Analyzer.BUNDLE_NAME, bundleName);

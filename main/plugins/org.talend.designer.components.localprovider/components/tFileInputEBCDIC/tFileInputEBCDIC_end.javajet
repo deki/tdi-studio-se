@@ -44,6 +44,3 @@
 	<%if(isLog4jEnabled){%>
 		log.info("<%=cid%>- Retrieved records count: "+ tos_count_<%=cid%> + ".");
 	<%}%>
-<%
-	log4jFileUtil.componentFinishInfo(node);
-%>

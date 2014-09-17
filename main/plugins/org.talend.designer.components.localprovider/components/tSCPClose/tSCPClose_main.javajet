@@ -25,4 +25,3 @@ imports="
 			log.info("<%=cid%> - Connection 'conn_<%=cid%>' to the server closed.");
 		<%}%>
 	}
-	<%log4jFileUtil.componentFinishInfo(node);%>

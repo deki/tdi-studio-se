@@ -27,6 +27,4 @@
 		new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(credentials_<%=cid%>);
 	service_<%=cid%>.getAccountOwner();
 	globalMap.put("service_" + "<%=cid%>",service_<%=cid%>);
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

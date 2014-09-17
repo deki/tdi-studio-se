@@ -32,12 +32,11 @@ imports="
 		
 		String boxPath = ElementParameterParser.getValue(node, "__PATH__");
 		String filePath = ElementParameterParser.getValue(node, "__FILE_PATH__");
-		
+		String exposeOutput = ElementParameterParser.getValue(node, "__EXPOSE_OUTPUT_STREAM__");
 		boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 		
 		final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 		log4jFileUtil.componentStartInfo(node);
-		log4jFileUtil.logParameters(node);
 		
 		String dataInputConnection = null;
         String dataOutputConnection = null;
@@ -59,9 +58,12 @@ imports="
 	        } // if(conn) end
 	    } // for(conns) end
 %>
+	
+<%if("false".equals(exposeOutput)){%>
+
 <%if(dataInputConnection != null)
 {%>
-	String <%=cid%>_fileName = <%=dataInputConnection%>.fileName;
+	String <%=cid%>_fileName = getFolderFromPath(<%=cid%>_filePath);
 	Object <%=cid%>_content = <%=dataInputConnection%>.content;
 	java.io.InputStream <%=cid%>_InputStream = null;
 	try
@@ -83,9 +85,24 @@ imports="
 			<%=cid%>_InputStream = new java.io.ByteArrayInputStream(<%=cid%>_content.toString().getBytes());
 		}
 		com.box.restclientv2.requestsbase.BoxDefaultRequestObject <%=cid%>_requestObject = new com.box.restclientv2.requestsbase.BoxDefaultRequestObject();
-	
-	
-		<%=cid%>_boxFolder = searchFolder(<%=cid%>_client, <%=cid%>_remotePath, <%=cid%>_remoteName);
+		
+		if(<%=cid%>_remotePath.equals("All Files"))
+		{
+			<%=cid%>_boxFolder = <%=cid%>_client.getFoldersManager().getFolder("0", null);
+		}
+		else
+		{
+			if (<%=cid%>_remotePath.startsWith("All Files"))
+			{
+				<%=cid%>_boxFolder = <%=cid%>_client.getFoldersManager().getFolder("0", null);
+			}
+			else
+			{
+				throw new Exception("Remote path should start with " + "\"" + "All Files" + "\"");
+			}
+			<%=cid%>_boxFolder = createSubDirectories(<%=cid%>_client, <%=cid%>_boxFolder, <%=cid%>_remotePath.substring("All Files/".length(), <%=cid%>_remotePath.length()));
+		}
+		
 		if (<%=cid%>_boxFolder == null)
 			throw new Exception("No destination folder found under path " + <%=cid%>_remotePath);
 		com.box.restclientv2.requestsbase.BoxFileUploadRequestObject <%=cid%>_fileUploadObj = com.box.restclientv2.requestsbase.BoxFileUploadRequestObject.uploadFileRequestObject(<%=cid%>_boxFolder.getId(), <%=cid%>_fileName, <%=cid%>_InputStream);
@@ -140,7 +157,22 @@ imports="
 			throw new Exception("The specified path is a directory (file expected)");
 		}
 		<%=cid%>_InputStream = new java.io.FileInputStream(<%=cid%>_fileToUpload);
-		<%=cid%>_boxFolder = searchFolder(<%=cid%>_client, <%=cid%>_remotePath, <%=cid%>_remoteName);
+		if(<%=cid%>_remotePath.equals("All Files"))
+		{
+			<%=cid%>_boxFolder = <%=cid%>_client.getFoldersManager().getFolder("0", null);
+		}
+		else
+		{
+			if (<%=cid%>_remotePath.startsWith("All Files"))
+			{
+				<%=cid%>_boxFolder = <%=cid%>_client.getFoldersManager().getFolder("0", null);
+			}
+			else
+			{
+				throw new Exception("Remote path should start with " + "\"" + "All Files" + "\"");
+			}
+			<%=cid%>_boxFolder = createSubDirectories(<%=cid%>_client, <%=cid%>_boxFolder, <%=cid%>_remotePath.substring("All Files/".length(), <%=cid%>_remotePath.length()));
+		}
 		if (<%=cid%>_boxFolder == null)
 			throw new Exception("No destination folder found under path " + <%=cid%>_remotePath);
 		com.box.restclientv2.requestsbase.BoxFileUploadRequestObject <%=cid%>_fileUploadObj = com.box.restclientv2.requestsbase.BoxFileUploadRequestObject.uploadFileRequestObject(<%=cid%>_boxFolder.getId(), <%=cid%>_fileToUpload.getName(), <%=cid%>_InputStream);
@@ -182,5 +214,7 @@ imports="
 <%
 }
 %>
+//close exposeOutputstream if
+<%}%>
 	//System.out.println(<%=cid%>_client.getAuthData().getRefreshToken());
     //System.out.println(<%=cid%>_client.getAuthData().getAccessToken());

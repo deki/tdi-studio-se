@@ -30,9 +30,6 @@ String localhost = ElementParameterParser.getValue(node, "__LOCALHOST__");
 boolean isDieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 log4jFileUtil.componentStartInfo(node); 
-log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("AUTH_PASSWORD"));
-log4jFileUtil.logParameters(node); 
-
 	//Bug12952, move all begin part to here below
 	String smtpHost    = ElementParameterParser.getValue(node, "__SMTP_HOST__");
 	String smtpPort    = ElementParameterParser.getValue(node, "__SMTP_PORT__");

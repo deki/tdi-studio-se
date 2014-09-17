@@ -25,9 +25,7 @@ imports="
 	String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
-	log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("BUCKETS","KEYS"));
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	
 	String outputsDir = ElementParameterParser.getValue(node, "__DIRECTORY__");
 	List<Map<String, String>> buckets = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__BUCKETS__");

@@ -31,9 +31,9 @@ import org.talend.designer.core.ui.preferences.TalendDesignerPrefConstants;
 
 /**
  * Each parameter of the components are read and written in this class. <br/>
- *
+ * 
  * $Id$
- *
+ * 
  */
 public class ElementParameter implements IElementParameter {
 
@@ -102,6 +102,8 @@ public class ElementParameter implements IElementParameter {
     private String readonlyIf = null;
 
     private String notReadonlyIf = null;
+
+    private boolean raw;
 
     private List<IElementParameterDefaultValue> defaultValues = new ArrayList<IElementParameterDefaultValue>();
 
@@ -582,7 +584,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Getter for noCheck.
-     *
+     * 
      * @return the noCheck
      */
     @Override
@@ -603,7 +605,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Sets the noCheck.
-     *
+     * 
      * @param noCheck the noCheck to set
      */
     @Override
@@ -613,7 +615,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Getter for context.
-     *
+     * 
      * @return the context
      */
     @Override
@@ -623,7 +625,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Sets the context.
-     *
+     * 
      * @param context the context to set
      */
     @Override
@@ -633,7 +635,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Getter for childParameters.
-     *
+     * 
      * @return the childParameters
      */
     @Override
@@ -663,7 +665,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Getter for currentRow.
-     *
+     * 
      * @return the currentRow
      */
     public int getCurrentRow() {
@@ -672,7 +674,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Sets the currentRow.
-     *
+     * 
      * @param currentRow the currentRow to set
      */
     public void setCurrentRow(int currentRow) {
@@ -762,7 +764,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Getter for color.
-     *
+     * 
      * @return the color
      */
     @Override
@@ -772,7 +774,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Sets the color.
-     *
+     * 
      * @param color the color to set
      */
     @Override
@@ -782,7 +784,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Getter for backgroundColor.
-     *
+     * 
      * @return the backgroundColor
      */
     @Override
@@ -792,7 +794,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Sets the backgroundColor.
-     *
+     * 
      * @param backgroundColor the backgroundColor to set
      */
     @Override
@@ -1055,7 +1057,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Getter for javaMethod.
-     *
+     * 
      * @return the javaMethod
      */
     public String getJavaClass() {
@@ -1064,7 +1066,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Sets the javaMethod.
-     *
+     * 
      * @param javaMethod the javaMethod to set
      */
     public void setJavaClass(String javaClass) {
@@ -1073,7 +1075,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Getter for jar.
-     *
+     * 
      * @return the jar
      */
     public String getJar() {
@@ -1082,7 +1084,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Sets the jar.
-     *
+     * 
      * @param jar the jar to set
      */
     public void setJar(String jar) {
@@ -1091,7 +1093,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Getter for args.
-     *
+     * 
      * @return the args
      */
     public String[] getArgs() {
@@ -1100,7 +1102,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Sets the args.
-     *
+     * 
      * @param args the args to set
      */
     public void setArgs(String[] args) {
@@ -1109,7 +1111,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Getter for javaFunction.
-     *
+     * 
      * @return the javaFunction
      */
     public String getJavaFunction() {
@@ -1118,7 +1120,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Sets the javaFunction.
-     *
+     * 
      * @param javaFunction the javaFunction to set
      */
     public void setJavaFunction(String javaFunction) {
@@ -1127,7 +1129,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * DOC Administrator Comment method "setMaxLength".
-     *
+     * 
      * @param maxlength
      */
     public void setMaxLength(int maxlength) {
@@ -1136,7 +1138,7 @@ public class ElementParameter implements IElementParameter {
 
     /**
      * Getter for maxlength.
-     *
+     * 
      * @return the maxlength
      */
     @Override
@@ -1194,4 +1196,15 @@ public class ElementParameter implements IElementParameter {
             return defaultValue.equals(value);
         }
     }
+
+    @Override
+    public boolean isRaw() {
+        return raw;
+    }
+
+    @Override
+    public void setRaw(boolean raw) {
+        this.raw = raw;
+    }
+
 }

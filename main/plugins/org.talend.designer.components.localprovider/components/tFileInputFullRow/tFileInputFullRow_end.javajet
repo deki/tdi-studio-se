@@ -28,7 +28,6 @@
             globalMap.put("<%=cid %>_NB_LINE", fid_<%=cid %>.getRowNumber());
 <%
 			log4jFileUtil.retrievedDataNumberInfoFromGlobalMap(node);
-			log4jFileUtil.componentFinishInfo(node);
 		}
 	}
 %>

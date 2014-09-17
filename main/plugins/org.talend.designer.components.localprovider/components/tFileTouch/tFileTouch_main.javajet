@@ -19,7 +19,6 @@
  	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
  	
  	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 %>     
 		java.io.File file_<%=cid %> = new java.io.File((<%=fileName%>));
 <%if(createDir){%>
@@ -44,6 +43,3 @@
         }
   		<%}%>
   		      
-<%
-log4jFileUtil.componentFinishInfo(node);
-%>

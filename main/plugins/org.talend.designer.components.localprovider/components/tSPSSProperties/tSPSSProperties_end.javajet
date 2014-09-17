@@ -43,4 +43,3 @@ if (outputConnName != null){
 }
 %>
 globalMap.put("<%=cid %>_IS_VALID_FILE",<%=cid%>_bIsValidFile);
-<%log4jFileUtil.componentFinishInfo(node);%>

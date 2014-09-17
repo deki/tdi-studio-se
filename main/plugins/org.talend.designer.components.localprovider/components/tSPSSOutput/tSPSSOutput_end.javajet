@@ -40,4 +40,3 @@ if (inputConnName != null){
 <%
 }
 %>
-	<%log4jFileUtil.componentFinishInfo(node);%>

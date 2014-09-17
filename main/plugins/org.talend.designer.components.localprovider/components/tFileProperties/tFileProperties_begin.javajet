@@ -23,8 +23,6 @@ boolean MD5 = new Boolean(ElementParameterParser.getValue(node, "__MD5__"));
 final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
 log4jFileUtil.componentStartInfo(node);
-log4jFileUtil.logParameters(node);
-
 String outputConnName = null;
 IConnection outputConn = null;
 List< ? extends IConnection> conns = node.getOutgoingSortedConnections();
@@ -105,5 +103,4 @@ if(file_<%=cid %>.exists()) {
     }
 }
 
-log4jFileUtil.componentFinishInfo(node);
 %>

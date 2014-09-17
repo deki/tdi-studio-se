@@ -236,7 +236,7 @@ if(columnList != null && columnList.size() > 0) {
     StringBuilder updateWhereStmt = actionSQLMap.get(UPDATE_WHERE_STMT);
     StringBuilder deleteWhereStmt = actionSQLMap.get(DELETE_WHERE_STMT);
     
-    if(!("true").equals(useExistingConn)){
+    if(!("true").equals(useExistingConn) && !("").equals(commitEvery)&&!("0").equals(commitEvery)){
     %>
     	conn_<%=cid%>.setAutoCommit(false);
     <%

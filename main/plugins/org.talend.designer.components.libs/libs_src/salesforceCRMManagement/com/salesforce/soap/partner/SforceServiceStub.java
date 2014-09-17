@@ -10306,6 +10306,23 @@ public class SforceServiceStub extends org.apache.axis2.client.Stub implements
 					"urn:partner.soap.sforce.com:Soap:describeGlobalRequest");
 			_operationClient.getOptions().setExceptionToBeThrownOnSOAPFault(
 					true);
+			{
+    			/*- ADD - START - BY cmeng - 20140901*/
+    			/**
+    			 * https://jira.talendforge.org/browse/TDI-30366<br>
+    			 * 1. Because this API seems not support this case: server use HTTP Protocol 1.0(not support CHUNKED) while client use HTTP Protocol 1.1<br>
+    			 * , then client will throw exception(org.apache.axis2.AxisFault: Transport error: 411 Error: Length Required)<br>
+    			 * 2. If the new API can support this case, then this additional codes can be cancelled.
+    			 * 
+    			 * Some information I searched on the net:<br>
+    			 * https://www.mail-archive.com/basedb-devel@lists.sourceforge.net/msg00309.html
+    			 * http://axis.apache.org/axis2/java/core/docs/http-transport.html
+    			 * http://en.wikipedia.org/wiki/Chunked_transfer_encoding
+    			 */
+    			_operationClient.getOptions().setProperty(
+    			        org.apache.axis2.transport.http.HTTPConstants.CHUNKED, "false");
+    			/*- ADD - END - BY cmeng* - 20140901*/
+			}
 
 			addPropertyToOperationClient(
 					_operationClient,
@@ -12816,6 +12833,23 @@ public class SforceServiceStub extends org.apache.axis2.client.Stub implements
 					"urn:partner.soap.sforce.com:Soap:describeSObjectRequest");
 			_operationClient.getOptions().setExceptionToBeThrownOnSOAPFault(
 					true);
+			{
+    			/*- ADD - START - BY cmeng - 20140901*/
+                /**
+                 * https://jira.talendforge.org/browse/TDI-30366<br>
+                 * 1. Because this API seems not support this case: server use HTTP Protocol 1.0(not support CHUNKED) while client use HTTP Protocol 1.1<br>
+                 * , then client will throw exception(org.apache.axis2.AxisFault: Transport error: 411 Error: Length Required)<br>
+                 * 2. If the new API can support this case, then this additional codes can be cancelled.
+                 * 
+                 * Some information I searched on the net:<br>
+                 * https://www.mail-archive.com/basedb-devel@lists.sourceforge.net/msg00309.html
+                 * http://axis.apache.org/axis2/java/core/docs/http-transport.html
+                 * http://en.wikipedia.org/wiki/Chunked_transfer_encoding
+                 */
+    			_operationClient.getOptions().setProperty(
+    			        org.apache.axis2.transport.http.HTTPConstants.CHUNKED, "false");
+    			/*- ADD - END - BY cmeng - 20140901*/
+			}
 
 			addPropertyToOperationClient(
 					_operationClient,

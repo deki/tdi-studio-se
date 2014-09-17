@@ -27,7 +27,6 @@ String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
 final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
 log4jFileUtil.componentStartInfo(node);
-log4jFileUtil.logParameters(node);
 %>
 String tmp_<%=cid%> = <%=filename%>;
 int emptyLineCount_<%=cid%> = 0;
@@ -125,6 +124,5 @@ if(isLog4jEnabled) {
     log.info("<%=cid%> - File : " + <%=filename%> + " row count is " + lineCount_<%=cid %>);
 <%
 }
-log4jFileUtil.componentFinishInfo(node);
 %> 
 

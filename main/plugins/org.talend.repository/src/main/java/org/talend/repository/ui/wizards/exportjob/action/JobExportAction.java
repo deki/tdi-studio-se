@@ -112,7 +112,7 @@ public class JobExportAction implements IRunnableWithProgress {
                     ProcessItem item = ItemCacheManager.getProcessItem(nodes.get(0).getId(),
                             RelationshipItemBuilder.LATEST_VERSION);
                     String version = item.getProperty().getVersion();
-                    isBuildSuccessful = exportJobScript(nodes, version, version, monitor);
+                    isBuildSuccessful = exportJobScript(nodes, version, bundleVersion, monitor);
                 } else {
                     isBuildSuccessful = exportJobScript(nodes, jobVersion, bundleVersion, monitor);
                 }

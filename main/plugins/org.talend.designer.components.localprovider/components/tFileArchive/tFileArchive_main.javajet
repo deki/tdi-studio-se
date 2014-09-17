@@ -31,7 +31,6 @@
 	String encryptMethod = ElementParameterParser.getValue(node, "__ENCRYPT_METHOD__");
 
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
 
 
@@ -92,4 +91,3 @@
    globalMap.put("<%=cid %>_ARCHIVE_FILENAME",(<%=zipFile %>).contains("\\")?
     (<%=zipFile %>).substring(((<%=zipFile %>).lastIndexOf("\\")+2)): (<%=zipFile %>).substring(((<%=zipFile %>).lastIndexOf("/"))+1));
 
-   <%log4jFileUtil.componentFinishInfo(node);%>

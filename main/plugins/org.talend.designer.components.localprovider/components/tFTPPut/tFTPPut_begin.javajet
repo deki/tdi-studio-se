@@ -39,9 +39,6 @@ boolean ftps = false;
 
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 log4jFileUtil.componentStartInfo(node);
-log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("PASSWORD","PRIVATEKEY","PASSPHRASE","KEYSTORE_FILE","KEYSTORE_PASS","PROXY_PASSWORD"));
-log4jFileUtil.logParameters(node); 
-
 String passwordFieldName = "";
 
 if (("true").equals(useExistingConn)) {

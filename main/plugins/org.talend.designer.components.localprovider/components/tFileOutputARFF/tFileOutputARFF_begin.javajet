@@ -26,7 +26,6 @@ if ((metadatas!=null)&&(metadatas.size()>0)) {
 	    String relation = ElementParameterParser.getValue(node,"__RELATION__");
 	    
         log4jFileUtil.componentStartInfo(node);
-        log4jFileUtil.logParameters(node);
  %>        
  int nb_line_<%=cid%> = 0;
  int splitedFileNo_<%=cid%> =0;

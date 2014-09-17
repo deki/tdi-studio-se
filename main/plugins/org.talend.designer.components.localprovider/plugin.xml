@@ -31,4 +31,1082 @@
             id="org.talend.designer.components.localprovider.BoxJetFileProvider">
       </jetProvider>
    </extension>
+   
+	<extension point="org.talend.core.runtime.librariesNeeded">
+	
+		<!-- cdh5.1 libraries -->
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hadoop-common-cdh5.1-lastest"           
+         	name="hadoop-common-2.3.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hadoop-common-2.3.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hadoop-hdfs-cdh5.1-lastest"           
+         	name="hadoop-hdfs-2.3.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hadoop-hdfs-2.3.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hadoop-auth-cdh5.1-lastest"           
+         	name="hadoop-auth-2.3.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hadoop-auth-2.3.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="avro-cdh5.1-lastest"       
+         	name="avro-1.7.5-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/avro-1.7.5-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hadoop-mapreduce-client-common-cdh5.1-lastest"           
+         	name="hadoop-mapreduce-client-common-2.3.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hadoop-mapreduce-client-common-2.3.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hadoop-mapreduce-client-core-cdh5.1-lastest"           
+         	name="hadoop-mapreduce-client-core-2.3.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hadoop-mapreduce-client-core-2.3.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hadoop-mapreduce-client-jobclient-cdh5.1-lastest"           
+         	name="hadoop-mapreduce-client-jobclient-2.3.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hadoop-mapreduce-client-jobclient-2.3.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hadoop-yarn-api-cdh5.1-lastest"       
+         	name="hadoop-yarn-api-2.3.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hadoop-yarn-api-2.3.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hadoop-yarn-client-cdh5.1-lastest"       
+         	name="hadoop-yarn-client-2.3.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hadoop-yarn-client-2.3.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hadoop-yarn-common-cdh5.1-lastest"       
+         	name="hadoop-yarn-common-2.3.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hadoop-yarn-common-2.3.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hbase-common-cdh5.1-lastest"       
+         	name="hbase-common-0.98.1-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hbase-common-0.98.1-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hbase-client-cdh5.1-lastest"       
+         	name="hbase-client-0.98.1-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hbase-client-0.98.1-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hbase-protocol-cdh5.1-lastest"       
+         	name="hbase-protocol-0.98.1-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hbase-protocol-0.98.1-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hbase-server-cdh5.1-lastest"       
+         	name="hbase-server-0.98.1-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hbase-server-0.98.1-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hbase-hadoop-compat-cdh5.1-lastest"       
+         	name="hbase-hadoop-compat-0.98.1-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hbase-hadoop-compat-0.98.1-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.zookeeper"
+        	id="zookeeper-cdh5.1-lastest"       
+         	name="zookeeper-3.4.5-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.pig"
+        	id="pig-withouthadoop-cdh5.1-lastest"       
+         	name="pig-0.12.0-cdh5.1.2-withouthadoop.jar"
+         	uripath="platform:/plugin/org.talend.libraries.pig/lib/pig-0.12.0-cdh5.1.2-withouthadoop.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hcatalog"
+        	id="hive-hcatalog-core-cdh5.1-lastest"       
+         	name="hive-hcatalog-core-0.12.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hcatalog/lib/hive-hcatalog-core-0.12.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hcatalog"
+        	id="hive-hcatalog-pig-adapter-cdh5.1-lastest"       
+         	name="hive-hcatalog-pig-adapter-0.12.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hcatalog/lib/hive-hcatalog-pig-adapter-0.12.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hcatalog"
+        	id="hive-hcatalog-server-extensions-cdh5.1-lastest"       
+         	name="hive-hcatalog-server-extensions-0.12.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hcatalog/lib/hive-hcatalog-server-extensions-0.12.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hive-metastore-cdh5.1-lastest"       
+         	name="hive-metastore-0.12.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hive-metastore-0.12.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hive-exec-cdh5.1-lastest"       
+         	name="hive-exec-0.12.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hive-exec-0.12.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hive-jdbc-cdh5.1-lastest"       
+         	name="hive-jdbc-0.12.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hive-jdbc-0.12.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hive-service-cdh5.1-lastest"       
+         	name="hive-service-0.12.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hive-service-0.12.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hive-common-cdh5.1-lastest"       
+         	name="hive-common-0.12.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hive-common-0.12.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hive-serde-cdh5.1-lastest"       
+         	name="hive-serde-0.12.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hive-serde-0.12.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="hive-hbase-handler-cdh5.1-lastest"       
+         	name="hive-hbase-handler-0.12.0-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hive-hbase-handler-0.12.0-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.sqoop"
+        	id="sqoop-cdh5.1-lastest"       
+         	name="sqoop-1.4.4-cdh5.1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.sqoop/lib/sqoop-1.4.4-cdh5.1.2.jar">
+    	</libraryNeeded>
+    	
+    	<!-- common libraries -->
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.common"
+        	id="commons-configuration-1.6.jar"       
+         	name="commons-configuration-1.6.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.common"
+        	id="commons-lang-2.6.jar"       
+         	name="commons-lang-2.6.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.common"
+        	id="commons-logging-1.1.3.jar"       
+         	name="commons-logging-1.1.3.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.3.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.common"
+        	id="commons-logging-1.1.1.jar"       
+         	name="commons-logging-1.1.1.jar"
+         	uripath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.common"
+        	id="commons-cli-1.2.jar"       
+         	name="commons-cli-1.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.common"
+        	id="commons-codec-1.4.jar"       
+         	name="commons-codec-1.4.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.4.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.common"
+        	id="commons-codec-1.7.jar"       
+         	name="commons-codec-1.7.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.7.jar">
+    	</libraryNeeded>    	
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.common"
+        	id="commons-collections-3.2.1.jar"       
+         	name="commons-collections-3.2.1.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-collections-3.2.1.jar">
+    	</libraryNeeded>   
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.guava"
+        	id="guava-11.0.2.jar"       
+         	name="guava-11.0.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.guava"
+        	id="guava-12.0.1.jar"       
+         	name="guava-12.0.1.jar"
+         	uripath="platform:/plugin/org.talend.libraries.guava/lib/guava-12.0.1.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.hdp.2.0"
+        	id="protobuf-java-2.5.0.jar"       
+         	name="protobuf-java-2.5.0.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/protobuf-java-2.5.0.jar">
+    	</libraryNeeded> 
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache"
+        	id="log4j-1.2.17.jar"       
+         	name="log4j-1.2.17.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar">
+    	</libraryNeeded> 
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.slf4j"
+        	id="slf4j-api-1.7.5.jar"       
+         	name="slf4j-api-1.7.5.jar"
+         	uripath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.5.jar">
+    	</libraryNeeded>     
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.slf4j"
+        	id="slf4j-log4j12-1.7.5.jar"       
+         	name="slf4j-log4j12-1.7.5.jar"
+         	uripath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="jersey-core-1.9.jar"       
+         	name="jersey-core-1.9.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5.1"
+        	id="avro-1.5.4.jar"       
+         	name="avro-1.5.4.jar"
+         	uripath="platform:/plugin/org.talend.designer.components.bigdata/components/tPigLoad/avro-1.5.4.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.jackson"
+        	id="jackson-mapper-asl-1.8.8.jar"       
+         	name="jackson-mapper-asl-1.8.8.jar"
+         	uripath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.jackson"
+        	id="jackson-core-asl-1.8.8.jar"       
+         	name="jackson-core-asl-1.8.8.jar"
+         	uripath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar">
+    	</libraryNeeded>
+    	
+	   	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.hdp.2.0"
+        	id="netty-3.6.6.Final.jar"       
+         	name="netty-3.6.6.Final.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/netty-3.6.6.Final.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.hdp.2.1"
+        	id="htrace-core-2.04.jar"       
+         	name="htrace-core-2.04.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.1/lib/htrace-core-2.04.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.pig"
+        	id="snappy-java-1.0.5.jar"       
+         	name="snappy-java-1.0.5.jar"
+         	uripath="platform:/plugin/org.talend.libraries.pig/lib/snappy-java-1.0.5.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.hdp.1.2"
+        	id="libfb303-0.9.0.jar"       
+         	name="libfb303-0.9.0.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/libfb303-0.9.0.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.cloudera.cdh5"
+        	id="libthrift-0.9.0.cloudera.2.jar"       
+         	name="libthrift-0.9.0.cloudera.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/libthrift-0.9.0.cloudera.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.hdp.2.0"
+        	id="jdo-api-3.0.1.jar"       
+         	name="jdo-api-3.0.1.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/jdo-api-3.0.1.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.common"
+        	id="commons-io-2.4.jar"       
+         	name="commons-io-2.4.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.4.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.pig"
+        	id="piggybank-cdh5.1.jar"       
+         	name="piggybank-cdh5.1.jar"
+         	uripath="platform:/plugin/org.talend.libraries.pig/lib/piggybank-cdh5.1.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.axis2"
+        	id="antlr-runtime-3.4.jar"       
+         	name="antlr-runtime-3.4.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache.axis2/lib/antlr-runtime-3.4.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.http"
+        	id="commons-httpclient-3.0.1.jar"       
+         	name="commons-httpclient-3.0.1.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache.http/lib/commons-httpclient-3.0.1.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.hdp.2.0"
+        	id="datanucleus-api-jdo-3.2.1.jar"       
+         	name="datanucleus-api-jdo-3.2.1.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/datanucleus-api-jdo-3.2.1.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.hdp.2.0"
+        	id="datanucleus-core-3.2.2.jar"       
+         	name="datanucleus-core-3.2.2.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/datanucleus-core-3.2.2.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.hadoop.hdp.2.0"
+        	id="datanucleus-rdbms-3.2.1.jar"       
+         	name="datanucleus-rdbms-3.2.1.jar"
+         	uripath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/datanucleus-rdbms-3.2.1.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.jdbc.derby"
+        	id="derby-10.4.2.0.jar"       
+         	name="derby-10.4.2.0.jar"
+         	uripath="platform:/plugin/org.talend.libraries.jdbc.derby/lib/derby-10.4.2.0.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.http"
+        	id="httpclient-4.2.5.jar"       
+         	name="httpclient-4.2.5.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache.http/lib/httpclient-4.2.5.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.apache.http"
+        	id="httpcore-4.2.5.jar"       
+         	name="httpcore-4.2.5.jar"
+         	uripath="platform:/plugin/org.talend.libraries.apache.http/lib/httpcore-4.2.5.jar">
+    	</libraryNeeded>
+    	
+    	<libraryNeeded
+	   		context="plugin:org.talend.libraries.servlet"
+        	id="servlet-api-2.5-20081211.jar"       
+         	name="servlet-api-2.5-20081211.jar"
+         	uripath="platform:/plugin/org.talend.libraries.servlet/lib/servlet-api-2.5-20081211.jar">
+    	</libraryNeeded>
+    	
+    	<!-- group of hdfs libraries -->
+		<libraryNeededGroup
+	            description="The lastest HDFS libraries of CDH 5.1"
+	            id="HDFS-LIB-CDH_5_1_LASTEST"
+	            name="HDFS-LIB-CDH_5_1_LASTEST">
+	         <library
+	            id="hadoop-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-hdfs-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-auth-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="avro-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="commons-configuration-1.6.jar">
+	         </library>
+	         <library
+	             id="commons-lang-2.6.jar">
+	         </library>
+	         <library
+	             id="commons-logging-1.1.3.jar">
+	         </library>
+	         <library
+	             id="commons-cli-1.2.jar">
+	         </library>
+	         <library
+	             id="commons-collections-3.2.1.jar">
+	         </library>
+	         <library
+	             id="guava-11.0.2.jar">
+	         </library>
+	         <library
+	             id="protobuf-java-2.5.0.jar">
+	         </library>
+	         <library
+	             id="slf4j-api-1.7.5.jar">
+	         </library>
+	         <library
+	             id="slf4j-log4j12-1.7.5.jar">
+	         </library>
+	         <library
+	             id="jersey-core-1.9.jar">
+	         </library>
+	    </libraryNeededGroup>
+
+		<!-- group of mapreduce libraries -->
+		<libraryNeededGroup
+	            description="The lastest Map Reduce libraries of CDH 5.1"
+	            id="MAPREDUCE-LIB-CDH_5_1_LASTEST"
+	            name="MAPREDUCE-LIB-CDH_5_1_LASTEST">
+	         <library
+	            id="hadoop-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-hdfs-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-auth-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hadoop-mapreduce-client-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-mapreduce-client-core-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-mapreduce-client-jobclient-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hadoop-yarn-api-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-yarn-client-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-yarn-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="avro-1.5.4.jar">
+	         </library>
+	         <library
+	             id="commons-configuration-1.6.jar">
+	         </library>
+	         <library
+	             id="commons-lang-2.6.jar">
+	         </library>
+	         <library
+	             id="commons-logging-1.1.3.jar">
+	         </library>
+	         <library
+	             id="commons-cli-1.2.jar">
+	         </library>
+	         <library
+	             id="commons-codec-1.4.jar">
+	         </library>
+	         <library
+	             id="commons-collections-3.2.1.jar">
+	         </library>
+	         <library
+	             id="guava-11.0.2.jar">
+	         </library>
+	         <library
+	             id="protobuf-java-2.5.0.jar">
+	         </library>
+	         <library
+	             id="slf4j-api-1.7.5.jar">
+	         </library>
+	         <library
+	             id="slf4j-log4j12-1.7.5.jar">
+	         </library>
+	         <library
+	             id="jackson-mapper-asl-1.8.8.jar">
+	         </library>
+	         <library
+	             id="jackson-core-asl-1.8.8.jar">
+	         </library>
+	         <library
+	             id="log4j-1.2.17.jar">
+	         </library>
+	    </libraryNeededGroup>
+	    
+	    <!-- group of talend mapreduce&hbase libraries -->
+		<libraryNeededGroup
+	            description="The lastest talend mapreduce hbase storage libraries of CDH 5.1"
+	            id="MAPREDUCE-HBASE-LIB-CDH_5_1_LASTEST"
+	            name="MAPREDUCE-HBASE-LIB-CDH_5_1_LASTEST">
+	         <library
+	            id="hbase-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hbase-client-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hbase-protocol-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hbase-server-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="zookeeper-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="htrace-core-2.04.jar">
+	         </library>
+	    </libraryNeededGroup>
+	    
+	    <!-- group of hbase libraries -->
+	    <libraryNeededGroup
+	            description="The lastest HBase libraries of CDH 5.1"
+	            id="HBASE-LIB-CDH_5_1_LASTEST"
+	            name="HBASE-LIB-CDH_5_1_LASTEST">
+	         <library
+	            id="hbase-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hbase-client-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hbase-protocol-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="zookeeper-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="htrace-core-2.04.jar">
+	         </library>
+	         <library
+	            id="commons-logging-1.1.1.jar">
+	         </library>
+	         <library
+	            id="commons-codec-1.7.jar">
+	         </library>
+	         <library
+	            id="guava-12.0.1.jar">
+	         </library>
+	         <library
+	            id="jackson-mapper-asl-1.8.8.jar">
+	         </library>
+	         <library
+	            id="jackson-core-asl-1.8.8.jar">
+	         </library>
+	         <library
+	            id="netty-3.6.6.Final.jar">
+	         </library>
+	         <library
+	            id="hadoop-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-auth-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="commons-configuration-1.6.jar">
+	         </library>
+	         <library
+	             id="commons-lang-2.6.jar">
+	         </library>
+	         <library
+	             id="commons-collections-3.2.1.jar">
+	         </library>
+	         <library
+	             id="protobuf-java-2.5.0.jar">
+	         </library>
+	         <library
+	             id="log4j-1.2.17.jar">
+	         </library>
+	         <library
+	             id="slf4j-api-1.7.5.jar">
+	         </library>
+	         <library
+	             id="slf4j-log4j12-1.7.5.jar">
+	         </library>
+	    </libraryNeededGroup>
+	    
+	    <!-- group of sqoop common libraries -->
+		<libraryNeededGroup
+	            description="The lastest Sqoop libraries of CDH 5.1"
+	            id="SQOOP-LIB-CDH_5_1_LASTEST"
+	            name="SQOOP-LIB-CDH_5_1_LASTEST">
+	         <library
+	            id="sqoop-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hadoop-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-hdfs-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-auth-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hadoop-mapreduce-client-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-mapreduce-client-core-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-mapreduce-client-jobclient-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hadoop-yarn-api-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-yarn-client-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-yarn-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="avro-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="commons-configuration-1.6.jar">
+	         </library>
+	         <library
+	             id="commons-lang-2.6.jar">
+	         </library>
+	         <library
+	             id="commons-io-2.4.jar">
+	         </library>
+	         <library
+	             id="commons-logging-1.1.3.jar">
+	         </library>
+	         <library
+	             id="commons-cli-1.2.jar">
+	         </library>
+	         <library
+	             id="commons-collections-3.2.1.jar">
+	         </library>
+	         <library
+	             id="protobuf-java-2.5.0.jar">
+	         </library>
+	         <library
+	             id="guava-11.0.2.jar">
+	         </library>
+	         <library
+	             id="slf4j-api-1.7.5.jar">
+	         </library>
+	         <library
+	             id="slf4j-log4j12-1.7.5.jar">
+	         </library>
+	         <library
+	             id="jackson-mapper-asl-1.8.8.jar">
+	         </library>
+	         <library
+	             id="jackson-core-asl-1.8.8.jar">
+	         </library>
+	         <library
+	             id="log4j-1.2.17.jar">
+	         </library>
+	    </libraryNeededGroup>
+	    
+	    <!-- group of pig common libraries -->
+		<libraryNeededGroup
+	            description="The lastest Pig libraries of CDH 5.1"
+	            id="PIG-LIB-CDH_5_1_LASTEST"
+	            name="PIG-LIB-CDH_5_1_LASTEST">
+	         <library
+	            id="pig-withouthadoop-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hadoop-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-hdfs-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-auth-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hadoop-mapreduce-client-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-mapreduce-client-core-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-mapreduce-client-jobclient-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hadoop-yarn-api-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-yarn-client-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-yarn-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="avro-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="commons-configuration-1.6.jar">
+	         </library>
+	         <library
+	             id="commons-lang-2.6.jar">
+	         </library>
+	         <library
+	             id="commons-logging-1.1.3.jar">
+	         </library>
+	         <library
+	             id="commons-cli-1.2.jar">
+	         </library>
+	         <library
+	             id="commons-codec-1.4.jar">
+	         </library>
+	         <library
+	             id="commons-collections-3.2.1.jar">
+	         </library>
+	         <library
+	             id="protobuf-java-2.5.0.jar">
+	         </library>
+	         <library
+	             id="slf4j-api-1.7.5.jar">
+	         </library>
+	         <library
+	             id="slf4j-log4j12-1.7.5.jar">
+	         </library>
+	         <library
+	             id="jackson-mapper-asl-1.8.8.jar">
+	         </library>
+	         <library
+	             id="jackson-core-asl-1.8.8.jar">
+	         </library>
+	         <library
+	             id="log4j-1.2.17.jar">
+	         </library>
+	         <library
+	             id="snappy-java-1.0.5.jar">
+	         </library>
+	    </libraryNeededGroup>
+	    
+	    <!-- group of pig hcat storage libraries -->
+		<libraryNeededGroup
+	            description="The lastest pig hcat storage libraries of CDH 5.1"
+	            id="PIG-HCAT-LIB-CDH_5_1_LASTEST"
+	            name="PIG-HCAT-LIB-CDH_5_1_LASTEST">
+	         <library
+	            id="hive-hcatalog-core-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hive-hcatalog-pig-adapter-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hive-hcatalog-server-extensions-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hive-metastore-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hive-exec-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="jdo-api-3.0.1.jar">
+	         </library>
+	         <library
+	             id="libthrift-0.9.0.cloudera.2.jar">
+	         </library>
+	         <library
+	             id="libfb303-0.9.0.jar">
+	         </library>
+	    </libraryNeededGroup>
+	    
+	    <!-- group of pig hbase storage libraries -->
+		<libraryNeededGroup
+	            description="The lastest pig hbase storage libraries of CDH 5.1"
+	            id="PIG-HBASE-LIB-CDH_5_1_LASTEST"
+	            name="PIG-HBASE-LIB-CDH_5_1_LASTEST">
+	         <library
+	            id="hbase-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hbase-client-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hbase-protocol-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hbase-server-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="zookeeper-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="htrace-core-2.04.jar">
+	         </library>
+	         <library
+	             id="guava-12.0.1.jar">
+	         </library>
+	         <library
+	             id="netty-3.6.6.Final.jar">
+	         </library>
+	    </libraryNeededGroup>
+	    
+	    <!-- group of pig rc file storage libraries -->
+		<libraryNeededGroup
+	            description="The lastest pig rc file storage libraries of CDH 5.1"
+	            id="PIG-RCFILE-LIB-CDH_5_1_LASTEST"
+	            name="PIG-RCFILE-LIB-CDH_5_1_LASTEST">
+	         <library
+	            id="hive-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hive-serde-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hive-exec-cdh5.1-lastest">
+	         </library>
+	    </libraryNeededGroup>
+	    
+	    <!-- group of pig avro storage libraries -->
+		<libraryNeededGroup
+	            description="The lastest pig avro storage libraries of CDH 5.1"
+	            id="PIG-AVRO-LIB-CDH_5_1_LASTEST"
+	            name="PIG-AVRO-LIB-CDH_5_1_LASTEST">
+	         <library
+	            id="piggybank-cdh5.1.jar">
+	         </library>
+	         <library
+	             id="commons-io-2.4.jar">
+	         </library>
+	         <library
+	             id="avro-cdh5.1-lastest">
+	         </library>
+	    </libraryNeededGroup>
+	    
+	    
+	    <!-- group of hive common libraries -->
+		<libraryNeededGroup
+	            description="The lastest Hive libraries of CDH 5.1"
+	            id="HIVE-LIB-CDH_5_1_LASTEST"
+	            name="HIVE-LIB-CDH_5_1_LASTEST">
+	         <library
+	            id="hive-metastore-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hive-exec-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hive-jdbc-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hive-service-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="jdo-api-3.0.1.jar">
+	         </library>
+	         <library
+	             id="libthrift-0.9.0.cloudera.2.jar">
+	         </library>
+	         <library
+	             id="libfb303-0.9.0.jar">
+	         </library>
+	         <library
+	             id="guava-11.0.2.jar">
+	         </library>
+	         <library
+	            id="hadoop-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-hdfs-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-auth-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hadoop-mapreduce-client-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-mapreduce-client-core-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-mapreduce-client-jobclient-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hadoop-yarn-api-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-yarn-client-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hadoop-yarn-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="avro-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="commons-configuration-1.6.jar">
+	         </library>
+	         <library
+	             id="commons-httpclient-3.0.1.jar">
+	         </library>
+	         <library
+	             id="httpcore-4.2.5.jar">
+	         </library>
+	         <library
+	             id="httpclient-4.2.5.jar">
+	         </library>
+	         <library
+	             id="commons-lang-2.6.jar">
+	         </library>
+	         <library
+	             id="commons-logging-1.1.3.jar">
+	         </library>
+	         <library
+	             id="commons-cli-1.2.jar">
+	         </library>
+	         <library
+	             id="commons-codec-1.4.jar">
+	         </library>
+	         <library
+	             id="commons-collections-3.2.1.jar">
+	         </library>
+	         <library
+	             id="protobuf-java-2.5.0.jar">
+	         </library>
+	         <library
+	             id="slf4j-api-1.7.5.jar">
+	         </library>
+	         <library
+	             id="slf4j-log4j12-1.7.5.jar">
+	         </library>
+	         <library
+	             id="jackson-mapper-asl-1.8.8.jar">
+	         </library>
+	         <library
+	             id="jackson-core-asl-1.8.8.jar">
+	         </library>
+	         <library
+	             id="log4j-1.2.17.jar">
+	         </library>
+	         <library
+	             id="commons-io-2.4.jar">
+	         </library>
+	         <library
+	             id="antlr-runtime-3.4.jar">
+	         </library>
+	         <library
+	             id="datanucleus-api-jdo-3.2.1.jar">
+	         </library>
+	         <library
+	             id="datanucleus-core-3.2.2.jar">
+	         </library>
+	         <library
+	             id="datanucleus-rdbms-3.2.1.jar">
+	         </library>
+	         <library
+	             id="derby-10.4.2.0.jar">
+	         </library>
+	    </libraryNeededGroup>
+	    
+	    <!-- group of hive hbase storage libraries -->
+		<libraryNeededGroup
+	            description="The lastest Hive hbase storage libraries of CDH 5.1"
+	            id="HIVE-HBASE-LIB-CDH_5_1_LASTEST"
+	            name="HIVE-HBASE-LIB-CDH_5_1_LASTEST">
+	         <library
+	             id="hive-hbase-handler-cdh5.1-lastest">
+	         </library>
+	         <library
+	            id="hbase-common-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hbase-client-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hbase-hadoop-compat-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hbase-protocol-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="hbase-server-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="zookeeper-cdh5.1-lastest">
+	         </library>
+	         <library
+	             id="htrace-core-2.04.jar">
+	         </library>
+	         <library
+	             id="netty-3.6.6.Final.jar">
+	         </library>
+	         <library
+	             id="servlet-api-2.5-20081211.jar">
+	         </library>		  
+	    </libraryNeededGroup>
+	    
+	</extension>
+	   
 </plugin>

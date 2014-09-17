@@ -63,10 +63,6 @@ if(thousandsSeparator.length() > 2){
 }
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 log4jCodeGenerateUtil.infoComponentStart(node);
-java.util.List<String> ignoredParamsList = new java.util.ArrayList<String>();
-ignoredParamsList.add("ENCODING");
-ignoredParamsList.add("PASS");
-log4jCodeGenerateUtil.setIgnoredParamsList(ignoredParamsList);
 %>
 
 <%

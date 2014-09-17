@@ -27,8 +27,6 @@ String condition = ElementParameterParser.getValue(node, "__FILTER_RELATION__");
 boolean useSSL = "true".equals(ElementParameterParser.getValue(node, "__USE_SSL__"));
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 log4jFileUtil.componentStartInfo(node); 
-log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("PASSWORD"));
-log4jFileUtil.logParameters(node); 
 %>  
 	String server_<%=cid %> = <%=host %>;
 	String mbox_<%=cid%> = "INBOX";

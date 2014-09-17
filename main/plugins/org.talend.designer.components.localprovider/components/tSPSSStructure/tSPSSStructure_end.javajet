@@ -44,5 +44,4 @@ if (outputConnName != null){
 	<%}%>
 <%
 }
-log4jFileUtil.componentFinishInfo(node);
 %>

@@ -1,0 +1,92 @@
+<%@ jet 
+imports="
+    org.talend.core.model.process.INode 
+    org.talend.core.model.process.IConnection
+    org.talend.core.model.process.IConnectionCategory 
+    org.talend.core.model.process.ElementParameterParser 
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+    org.talend.core.model.metadata.IMetadataTable 
+    org.talend.core.model.metadata.IMetadataColumn
+    org.talend.core.model.metadata.types.JavaTypesManager
+    org.talend.core.model.metadata.types.JavaType
+    java.util.List
+" 
+%>
+	<%@ include file="../templates/Log4j/Log4jFileUtil.javajet"%>
+<%
+		CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+		INode node = (INode)codeGenArgument.getArgument();
+		String cid = node.getUniqueName();
+		
+		String exposeOutput = ElementParameterParser.getValue(node, "__EXPOSE_OUTPUT_STREAM__");
+		String fileName = ElementParameterParser.getValue(node, "__FILE_NAME__");
+		boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+		
+		final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+				log4jFileUtil.componentStartInfo(node);
+%>
+<%if("true".equals(exposeOutput)){%>
+	String <%=cid%>_fileName = <%=fileName%>;
+	if(<%=cid%>_fileName == null || <%=cid%>_fileName.isEmpty())
+	{
+		throw new Exception("File name can not be empty");
+	}
+	<%=cid%>_uploader_input = new java.io.ByteArrayInputStream(<%=cid%>_uploader_output.toByteArray());
+	if(<%=cid%>_remotePath.equals("All Files"))
+		{
+			<%=cid%>_boxFolder = <%=cid%>_client.getFoldersManager().getFolder("0", null);
+		}
+		else
+		{
+			if (<%=cid%>_remotePath.startsWith("All Files"))
+			{
+				<%=cid%>_boxFolder = <%=cid%>_client.getFoldersManager().getFolder("0", null);
+			}
+			else
+			{
+				throw new Exception("Remote path should start with " + "\"" + "All Files" + "\"");
+			}
+			<%=cid%>_boxFolder = createSubDirectories(<%=cid%>_client, <%=cid%>_boxFolder, <%=cid%>_remotePath.substring("All Files/".length(), <%=cid%>_remotePath.length()));
+		}
+		
+		if (<%=cid%>_boxFolder == null)
+			throw new Exception("No destination folder found under path " + <%=cid%>_remotePath);
+		com.box.restclientv2.requestsbase.BoxFileUploadRequestObject <%=cid%>_fileUploadObj = com.box.restclientv2.requestsbase.BoxFileUploadRequestObject.uploadFileRequestObject(<%=cid%>_boxFolder.getId(), <%=cid%>_fileName, <%=cid%>_uploader_input);
+		<%=cid%>_boxFile = <%=cid%>_client.getFilesManager().uploadFile(<%=cid%>_fileUploadObj);
+	}
+	catch (java.lang.Exception e)
+	{
+<%
+		if(dieOnError) {
+%>
+			throw e;
+<%
+		} else {
+%>
+<%
+			if(isLog4jEnabled){
+%>
+				log.error("<%=cid%> - " +e.getMessage());
+<%
+			}
+%>
+			System.err.println(e);
+<%
+		}
+%>
+	}
+	finally {
+		if (<%=cid%>_uploader_input != null)
+			try {
+				<%=cid%>_uploader_input.close();
+			} catch (IOException e)
+			{
+			}
+		if (<%=cid%>_uploader_output != null)
+			try {
+				<%=cid%>_uploader_output.close();
+			} catch (IOException e)
+			{
+			}
+	}
+<%}%>

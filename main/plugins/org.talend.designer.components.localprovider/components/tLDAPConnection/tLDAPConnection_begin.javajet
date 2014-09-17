@@ -28,8 +28,6 @@ String aliases=ElementParameterParser.getValue(node, "__ALIASES__");
 String baseDN=ElementParameterParser.getValue(node, "__BASEDN__");
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 log4jFileUtil.componentStartInfo(node); 
-log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("PASS","STORECA","STORECAPWD"));
-log4jFileUtil.logParameters(node); 
 %>
 java.util.Hashtable env_<%=cid%> = new java.util.Hashtable();
 env_<%=cid%>.put(javax.naming.Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
@@ -113,4 +111,3 @@ if(("TLS").equals(protocol)){
 <%if(isLog4jEnabled){%>
 	log.info("<%=cid%> - Connection to '"+<%=host%> + "' has succeeded.");
 <%}%>
-	<%log4jFileUtil.componentFinishInfo(node);%>

@@ -545,8 +545,7 @@
 								}
 								%>
 
-					<%
-					%>
+					
 				
 				
 					rsc_<%=componentNameForKeyProblem%>_<%=currentJoinedTableIndex%> = (SortableRow_<%=componentNameForKeyProblem%>_<%=currentJoinedTableIndex%>) fsi_<%=componentNameForKeyProblem%>_<%=currentJoinedTableIndex%>.next();

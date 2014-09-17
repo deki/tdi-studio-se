@@ -41,4 +41,12 @@ imports="
 				}catch(Exception e){
 				}
 			}
+		<%} else {%>
+			java.io.InputStream in = (java.io.InputStream)globalMap.get("<%=cid %>_INPUT_STREAM");
+			if(in != null) {
+				try{
+					in.close();
+				}catch(Exception e){
+				}
+			}
 		<%}%>

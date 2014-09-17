@@ -33,7 +33,6 @@ if(!(filename_<%=cid %> instanceof java.io.InputStream)){
 }
 globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid %>);
 <%
-			log4jFileUtil.componentFinishInfo(node);
 		}
 	}
 %>      

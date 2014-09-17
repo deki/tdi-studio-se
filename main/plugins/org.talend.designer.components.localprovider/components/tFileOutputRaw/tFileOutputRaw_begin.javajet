@@ -14,7 +14,6 @@
 	String cid = node.getUniqueName();
 	
     log4jFileUtil.componentStartInfo(node);
-    log4jFileUtil.logParameters(node);
 	String filename = ElementParameterParser.getValue(node, "__FILENAME__");
 %>
 	String fileName_<%=cid%> = <%=filename %>;

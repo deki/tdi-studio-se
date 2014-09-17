@@ -25,7 +25,6 @@
 	String host = ElementParameterParser.getValue(node, "__SERVER__");
 	String batchRow=ElementParameterParser.getValue(node,"__BATCHROW__");
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-	log4jCodeGenerateUtil.logParameters(node);
 	//String server = ElementParameterParser.getValue(node, "__SERVERNAME__");
 	String port = ElementParameterParser.getValue(node, "__PORT__");
 	String vnode = ElementParameterParser.getValue(node, "__VNODE__");

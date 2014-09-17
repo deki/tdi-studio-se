@@ -37,7 +37,4 @@ if(("PROPERTIES_FORMAT").equals(fileFormat)){
 <%
 }
 
-log4jFileUtil.collectRetriveData(inConnName,"key",0,2);
-log4jFileUtil.collectRetriveData(inConnName,"value",1,2);
-log4jFileUtil.debugWriteDataWithoutCountInfo();
 %>

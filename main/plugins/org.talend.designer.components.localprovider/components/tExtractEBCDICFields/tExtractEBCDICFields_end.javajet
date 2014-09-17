@@ -16,6 +16,3 @@ globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid %>);
 <%if(isLog4jEnabled){%>
 	log.info("<%=cid%> - Extracted records count: " + nb_line_<%=cid %> + " .");
 <%}%>
-<%
-	log4jFileUtil.componentFinishInfo(node);
-%>

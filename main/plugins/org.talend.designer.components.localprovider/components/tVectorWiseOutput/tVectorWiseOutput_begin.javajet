@@ -141,7 +141,15 @@ if(useExistingConnection) {
 	java.sql.Connection conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>,dbUser_<%=cid%>,dbPwd_<%=cid%>);
 	<%dbLog.conn().connDone(dbLog.var("url"));%>
 	resourceMap.put("conn_<%=cid%>", conn_<%=cid%>);
-	conn_<%=cid%>.setAutoCommit(false);
+    
+            <%
+              if(!("").equals(commitEvery)&&!("0").equals(commitEvery)){
+                  %>
+                    conn_<%=cid%>.setAutoCommit(false);
+                  <%
+             } 
+            %>
+
 	<%
 }	
 dbLog.commit().logAutoCommit("conn_"+cid+".getAutoCommit()");

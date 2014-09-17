@@ -21,8 +21,6 @@ boolean bCreateDir = "true".equals(ElementParameterParser.getValue(node, "__CREA
 String sTmpOutFileName = outFileName;
 
 log4jFileUtil.componentStartInfo(node);
-log4jFileUtil.logParameters(node);
-
 if (outFileName.equals(inFileName)){
   sTmpOutFileName = outFileName + "+ \"_tmp\"";
   bCreateDir = false;
@@ -71,6 +69,3 @@ in_<%=cid %>.close();
 <%}%>
 globalMap.put("<%=cid %>_ISEND", true);
 
-<%
-log4jFileUtil.componentFinishInfo(node);
-%>

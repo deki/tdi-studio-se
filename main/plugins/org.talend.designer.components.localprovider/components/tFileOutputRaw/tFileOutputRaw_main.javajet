@@ -38,9 +38,7 @@
 %>
 				try {
 					Object content_<%=cid%> = <%=incomingConn.getName()%>.<%=columnList.get(0).getLabel()%>;
-<%
-					log4jFileUtil.collectRetriveData(incomingConn.getName(),columnList.get(0).getLabel(),0,1);
-%>
+
 					if(content_<%=cid%> != null) {
 						java.io.File file_<%=cid%>=new java.io.File(fileName_<%=cid%>);
 						java.io.File parentFile_<%=cid%>=file_<%=cid%>.getParentFile();
@@ -86,7 +84,6 @@
 %>
 				}
 <%
-				log4jFileUtil.debugWriteDataWithoutCountInfo();
 			}
 		}
 	}

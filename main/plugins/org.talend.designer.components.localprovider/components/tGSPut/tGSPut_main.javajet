@@ -24,9 +24,7 @@
 	boolean isUseFilesList=("true").equals(ElementParameterParser.getValue(node, "__USE_FILES_LIST__"));
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
-	log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("FILES"));
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	
 	String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
 	List<Map<String, String>> files = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__FILES__");	
@@ -162,6 +160,4 @@
 		%>
 	}
 	globalMap.put("<%=cid%>_NB_LINE", nb_line_<%=cid%>);
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

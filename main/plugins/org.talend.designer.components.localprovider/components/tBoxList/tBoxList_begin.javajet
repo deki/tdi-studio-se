@@ -31,12 +31,12 @@ imports="
 	    String connectionKey = "\"conn_" + connection+"\"";
 		
 		String path = ElementParameterParser.getValue(node, "__PATH__");
-		
+		String filelistType = ElementParameterParser.getValue(node, "__LIST_MODE__");
+		boolean includeSubDirectories = "true".equals(ElementParameterParser.getValue(node, "__INCLUDSUBDIR__"));
 		boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 		
 		final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 				log4jFileUtil.componentStartInfo(node);
-				log4jFileUtil.logParameters(node);
 		
 		List<IMetadataTable> metadatas = node.getMetadataList();
 		IMetadataTable metadata = null;
@@ -175,8 +175,8 @@ if(!"true".equals(useExistingConn)){
 %>
 		}
 	}
-	//System.out.println(<%=cid%>_client.getAuthData().getRefreshToken());
-    //System.out.println(<%=cid%>_client.getAuthData().getAccessToken());
+	System.out.println(<%=cid%>_client.getAuthData().getRefreshToken());
+    System.out.println(<%=cid%>_client.getAuthData().getAccessToken());
 
 	if (<%=cid%>_boxFile == null && <%=cid%>_boxFolder == null)
 	{
@@ -199,62 +199,61 @@ if(!"true".equals(useExistingConn)){
 		}
 %>	
 	}
-	else if (<%=cid%>_boxFile != null)
-	{
-	//System.out.println("BoxFile found!");
-		java.io.InputStream <%=cid%>_fileContent = <%=cid%>_client.getFilesManager().downloadFile(<%=cid%>_boxFile.getId(), null);
-<%
-		if(dataOutputConnection != null) {
-%>
-			<%=dataOutputConnection%>.name = <%=cid%>_boxFile.getName();
-			java.lang.StringBuilder <%=cid%>_sb1 = new java.lang.StringBuilder();
-			for (com.box.boxjavalibv2.dao.BoxTypedObject obj : <%=cid%>_boxFile.getPathCollection().getEntries())
-        		<%=cid%>_sb1.append(obj.getValue("name") + "/");
-			<%=dataOutputConnection%>.path = <%=cid%>_sb1.toString();
-			<%=dataOutputConnection%>.lastModified = <%=cid%>_boxFile.getModifiedAt();
-			<%=dataOutputConnection%>.size = <%=cid%>_boxFile.getSize();
-			<%=dataOutputConnection%>.content = <%=cid%>_fileContent;
-			
-<%}%>
-			globalMap.put("<%=cid%>_NAME", <%=cid%>_boxFile.getName());
-			java.lang.StringBuilder <%=cid%>_sb2 = new java.lang.StringBuilder();
-			for (com.box.boxjavalibv2.dao.BoxTypedObject obj : <%=cid%>_boxFile.getPathCollection().getEntries())
-        		<%=cid%>_sb2.append(obj.getValue("name") + "/");
-			globalMap.put("<%=cid%>_PATH", <%=cid%>_sb2.toString());
-			globalMap.put("<%=cid%>_LAST_MODIFIED", <%=cid%>_boxFile.getModifiedAt());
-			globalMap.put("<%=cid%>_SIZE", <%=cid%>_boxFile.getSize());
-			globalMap.put("<%=cid%>_CONTENT", <%=cid%>_fileContent);
-	}
 	else if (<%=cid%>_boxFolder != null)
 	{
-	//System.out.println("BoxFolder found!");
-	java.util.Map<String, String> <%=cid%>_folderChildren = new java.util.HashMap<String, String>();
-	for (com.box.boxjavalibv2.dao.BoxTypedObject obj : <%=cid%>_boxFolder.getItemCollection().getEntries())
-	{
-		<%=cid%>_folderChildren.put(obj.getValue("name").toString(), obj.getType());
-	}
-<%
-		if(dataOutputConnection != null) {
-%>
-			<%=dataOutputConnection%>.name = <%=cid%>_boxFolder.getName();
-			java.lang.StringBuilder <%=cid%>_sb1 = new java.lang.StringBuilder();
-			for (com.box.boxjavalibv2.dao.BoxTypedObject obj : <%=cid%>_boxFolder.getPathCollection().getEntries())
-    			<%=cid%>_sb1.append(obj.getValue("name") + "/");
-			<%=dataOutputConnection%>.path = <%=cid%>_sb1.toString();
-			<%=dataOutputConnection%>.lastModified = <%=cid%>_boxFolder.getModifiedAt();
-			<%=dataOutputConnection%>.size = <%=cid%>_boxFolder.getSize();
-			<%=dataOutputConnection%>.content = <%=cid%>_folderChildren;
-<%
+		java.util.List<com.box.boxjavalibv2.dao.BoxItem>  <%=cid%>_children = new java.util.ArrayList<com.box.boxjavalibv2.dao.BoxItem>();
+<%if(includeSubDirectories){%>
+	<%if(filelistType.equalsIgnoreCase("Directories")){%>
+		<%=cid%>_children = getChildrenRecursively(<%=cid%>_client, <%=cid%>_boxFolder, <%=cid%>_children, true, false);
+	<%} else if (filelistType.equalsIgnoreCase("Files")){%>		
+		<%=cid%>_children = getChildrenRecursively(<%=cid%>_client, <%=cid%>_boxFolder, <%=cid%>_children, false, true);
+	<%} else {%>
+		<%=cid%>_children = getChildrenRecursively(<%=cid%>_client, <%=cid%>_boxFolder, <%=cid%>_children, true, true);
+	<%}%>
+<%}%>
+<%else{%>
+		for (com.box.boxjavalibv2.dao.BoxTypedObject obj : <%=cid%>_boxFolder.getItemCollection().getEntries())
+		{
+	<%if(filelistType.equalsIgnoreCase("Directories")){%>
+			if(obj.getType().equals("folder"))
+			{
+				com.box.boxjavalibv2.dao.BoxFolder folder = <%=cid%>_client.getFoldersManager().getFolder(obj.getId(), null);
+				<%=cid%>_children.add(folder);
+			}
+	<%} else if (filelistType.equalsIgnoreCase("Files")){%>
+			if (obj.getType().equals("file"))
+			{
+				com.box.boxjavalibv2.dao.BoxFile file = <%=cid%>_client.getFilesManager().getFile(obj.getId(), null);
+				<%=cid%>_children.add(file);
+			}
+	<%} else {%>
+			if(obj.getType().equals("folder"))
+			{
+				com.box.boxjavalibv2.dao.BoxFolder folder = <%=cid%>_client.getFoldersManager().getFolder(obj.getId(), null);
+				<%=cid%>_children.add(folder);
+			}
+			else if (obj.getType().equals("file"))
+			{
+				com.box.boxjavalibv2.dao.BoxFile file = <%=cid%>_client.getFilesManager().getFile(obj.getId(), null);
+				<%=cid%>_children.add(file);
+			}
+	<%}%>
+			
+			
 		}
-%>
-		globalMap.put("<%=cid%>_NAME", <%=cid%>_boxFolder.getName());
-		java.lang.StringBuilder <%=cid%>_sb2 = new java.lang.StringBuilder();
-		for (com.box.boxjavalibv2.dao.BoxTypedObject obj : <%=cid%>_boxFolder.getPathCollection().getEntries())
-        	<%=cid%>_sb2.append(obj.getValue("name") + "/");
-		globalMap.put("<%=cid%>_PATH", <%=cid%>_sb2.toString());
-		globalMap.put("<%=cid%>_LAST_MODIFIED", <%=cid%>_boxFolder.getModifiedAt());
-		globalMap.put("<%=cid%>_SIZE", <%=cid%>_boxFolder.getSize());
-		globalMap.put("<%=cid%>_CONTENT", <%=cid%>_folderChildren);
-	}
+<%}%>
+		
+		for (com.box.boxjavalibv2.dao.BoxItem <%=cid%>_item : <%=cid%>_children)
+		{
+			String <%=cid%>_itemPath = getBoxItemPath(<%=cid%>_item);
+			globalMap.put("<%=cid%>_NAME", <%=cid%>_item.getName());
+			globalMap.put("<%=cid%>_ID", <%=cid%>_item.getId());
+			globalMap.put("<%=cid%>_FILE_PATH", <%=cid%>_itemPath);
+			globalMap.put("<%=cid%>_FILE_DIRECTORY", <%=cid%>_itemPath + <%=cid%>_item.getName());
+			globalMap.put("<%=cid%>_TYPE",<%=cid%>_item.getType());
+			globalMap.put("<%=cid%>_LAST_MODIFIED", <%=cid%>_item.getModifiedAt());
+			globalMap.put("<%=cid%>_SIZE", <%=cid%>_item.getSize());
+		
+		
 			
 			

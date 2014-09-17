@@ -26,7 +26,6 @@ if ((metadatas!=null)&&(metadatas.size()>0)) {
     	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
     	
         log4jFileUtil.componentStartInfo(node);
-        log4jFileUtil.logParameters(node);
 %>		
 		int nb_line_<%=cid%> = 0;
 		int totalLine<%=cid %> = 0;
@@ -69,7 +68,6 @@ if ((metadatas!=null)&&(metadatas.size()>0)) {
                  colNo++;
              }
              
-             log4jFileUtil.collectRetriveData(conn.getName(),metadata);
              log4jFileUtil.debugRetriveData(node,false);
              
          }

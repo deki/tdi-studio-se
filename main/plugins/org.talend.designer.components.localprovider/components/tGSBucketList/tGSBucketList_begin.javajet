@@ -19,7 +19,6 @@ imports="
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
 	int nb_bucket_<%=cid%> = 0;
 	org.jets3t.service.model.GSBucket[] buckets_<%=cid%> = new org.jets3t.service.model.GSBucket[] {};

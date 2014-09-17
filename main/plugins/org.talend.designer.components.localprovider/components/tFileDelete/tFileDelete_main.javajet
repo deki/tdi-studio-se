@@ -22,7 +22,6 @@ boolean either = ("true").equals(ElementParameterParser.getValue(node, "__FOLDER
 final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
 log4jFileUtil.componentStartInfo(node);
-log4jFileUtil.logParameters(node);
 %>
 class DeleteFolder<%=cid%>{
 	 /**
@@ -207,7 +206,6 @@ if(either){
 <%
 }
 
-log4jFileUtil.componentFinishInfo(node);
 %>
     
      

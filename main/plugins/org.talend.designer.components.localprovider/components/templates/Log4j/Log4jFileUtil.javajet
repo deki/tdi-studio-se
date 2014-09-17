@@ -7,7 +7,6 @@
 		INode node = null;
 	    String cid = null;
  		boolean isLog4jEnabled = false;
- 		java.util.List<String> ignoredParamsList=null;
  		
  		public DefaultLog4jFileUtil(){
  		}
@@ -17,23 +16,6 @@
 			this.isLog4jEnabled = ("true").equals(org.talend.core.model.process.ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
  		}
  		
-		public void componentStartInfo(INode node) {
-			if (isLog4jEnabled) {
-			%>
-				log.info("<%=cid%> - Start to work");
-				final StringBuffer log4jSb_<%=cid%> = new StringBuffer();
-			<%
-			}
-		}
-		
-		public void componentFinishInfo(INode node) {
-			if (isLog4jEnabled) {
-			%>
-				log.info("<%=cid%> - Done.");
-			<%
-			}
-		}
-
 		//for all tFileinput* components 
 		public void startRetriveDataInfo() {
 			if (isLog4jEnabled) {
@@ -68,169 +50,43 @@
 			}
 		}
 		
-		public void setIgnoredParamsList(java.util.List<String> ignoredParamsList){
-			this.ignoredParamsList=ignoredParamsList;
-		}
-		
-		private java.util.Set<org.talend.core.model.process.EParameterFieldType> ignoredParamsTypes = new java.util.HashSet<org.talend.core.model.process.EParameterFieldType>();
-		
-		public void addIgnoredParamsType(org.talend.core.model.process.EParameterFieldType type){
-			this.ignoredParamsTypes.add(type);
-		}
-		
-		public void logParameters(INode node){
-			if(isLog4jEnabled){
-			%>
-				StringBuilder log4jParamters_<%=cid%> = new StringBuilder();
-			   	log4jParamters_<%=cid%>.append("<%=cid%>" + " - Parameters:");
-			   	<%
-			   	ignoredParamsTypes.addAll(
-			   		java.util.Arrays.asList(
-				   		org.talend.core.model.process.EParameterFieldType.SCHEMA_TYPE,
-				   		org.talend.core.model.process.EParameterFieldType.LABEL,
-				   		org.talend.core.model.process.EParameterFieldType.EXTERNAL,
-				   		org.talend.core.model.process.EParameterFieldType.MAPPING_TYPE,org.talend.core.model.process.EParameterFieldType.IMAGE)
-			   	);
-		   		for(org.talend.core.model.process.IElementParameter ep : org.talend.core.model.utils.NodeUtil.getDisplayedParameters(node)){
-		   			if(ignoredParamsTypes.contains(ep.getFieldType()) || (ignoredParamsList!=null && ignoredParamsList.contains(ep.getName()))){
-		   				continue;
-		   			}
-		   			String name = ep.getName();
-		   			String value = org.talend.core.model.utils.NodeUtil.getNormalizeParameterValue(node, ep);
-		   			%>
-					log4jParamters_<%=cid%>.append("<%=name%>" + " = " + <%=value%>);
-					log4jParamters_<%=cid%>.append(" | ");
-				<%
-		   		}
-		   		%>
-		   		log.debug(log4jParamters_<%=cid%>);
-	   		<%
-	   		}
-		}
-		
-		public void collectRetriveData(String columnValue){
-			if(isLog4jEnabled){
-			%>
-				log4jSb_<%=cid%>.append(<%=columnValue%>);
-				log4jSb_<%=cid%>.append("|");								
-			<%
-			}
-		}
-		
-		public void collectRetriveData(String connName,String columnValue,int index,int length){
-			if(isLog4jEnabled){
-			%>
-				log4jSb_<%=cid%>.append(<%=connName%>.<%=columnValue%>);
-				<%if(index < length - 1) {%>
-				log4jSb_<%=cid%>.append("|");
-				<%}%>
-			<%
-			}
-		}
-		
-		public void collectRetriveData(org.talend.core.model.process.IConnection outputConn){
-			if(isLog4jEnabled){
-				if(outputConn == null) {
-					return;
-				}
-    			org.talend.core.model.metadata.IMetadataTable metadata = outputConn.getMetadataTable();
-    			if(metadata == null) {
-    				return;
-    			}
-    			java.util.List<org.talend.core.model.metadata.IMetadataColumn> listColumns = metadata.getListColumns();
-    			if(listColumns == null) {
-    				return;
-    			}
-    			java.util.Iterator<org.talend.core.model.metadata.IMetadataColumn> iterator = listColumns.iterator();
-    			while(iterator.hasNext()) {
-    				org.talend.core.model.metadata.IMetadataColumn column = iterator.next();
-%>
-					log4jSb_<%=cid%>.append(<%=outputConn.getName()%>.<%=column.getLabel()%>);
-<%
-					if(iterator.hasNext()) {
-%>
-						log4jSb_<%=cid%>.append("|");
-<%
-					}
-				}
-			}
-		}
-		
-		public void collectRetriveData(String connectionName,org.talend.core.model.metadata.IMetadataTable metadata){
-			if(isLog4jEnabled){
-    			if(metadata == null) {
-    				return;
-    			}
-    			java.util.List<org.talend.core.model.metadata.IMetadataColumn> listColumns = metadata.getListColumns();
-    			if(listColumns == null) {
-    				return;
-    			}
-    			java.util.Iterator<org.talend.core.model.metadata.IMetadataColumn> iterator = listColumns.iterator();
-    			while(iterator.hasNext()) {
-    				org.talend.core.model.metadata.IMetadataColumn column = iterator.next();
-%>
-					log4jSb_<%=cid%>.append(<%=connectionName%>.<%=column.getLabel()%>);
-<%
-					if(iterator.hasNext()) {
-%>
-						log4jSb_<%=cid%>.append("|");
-<%
-					}
-				}
-			}
-		}
-		
-		public void debugRetriveData() {
-			if(isLog4jEnabled){
-			%>
-				log.trace("<%=cid%> - Content of current record : " + log4jSb_<%=cid%>);
-				log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
-			<%
-			}
-		}
-		
-		//for all tFileinput* components
-		public void debugRetriveData(INode node,boolean hasIncreased) {
-			if(isLog4jEnabled){
-			%>
-				log.debug("<%=cid%> - Retrieving the record " + (nb_line_<%=cid%><%=hasIncreased?"":"+1"%>) + ".");
-				log.trace("<%=cid%> - Content of the record " + (nb_line_<%=cid%><%=hasIncreased?"":"+1"%>) + ": " + log4jSb_<%=cid%>);
-				log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
-			<%		
-			}
-		}
-		
-		public void debugRetriveData(INode node) {
-			debugRetriveData(node,true);
-		}
-		
-		//for all tFileOutput* components		
-		public void debugWriteDataWithoutCountInfo() {
-			if(isLog4jEnabled){
-			%>
-				log.trace("<%=cid%> - Content of the record : " + log4jSb_<%=cid%>);
-				log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
-			<%		
-			}
-		}
-		
-		public void debugWriteData(INode node) {
-			if(isLog4jEnabled){
-			%>
-				log.debug("<%=cid%> - Writing the record " + nb_line_<%=cid %> + " to the file.");
-				log.trace("<%=cid%> - Content of the record " + nb_line_<%=cid%> + ": " + log4jSb_<%=cid%>);
-				log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
-			<%		
-			}
-		}
-		
-		//for all tFileOutput* components
-		//TODO: should rename as writtenDataNumberInfo?
 		public void writeDataFinishInfo(INode node) {
 			if(isLog4jEnabled){
 			%>
 				log.info("<%=cid%> - Written records count: " + nb_line_<%=cid %> + " .");
 			<%		
+			}
+		}
+		
+ 		//TODO delete it and remove all log4jSb parameter from components
+		public void componentStartInfo(INode node) {
+			if (isLog4jEnabled) {
+			%>
+				final StringBuffer log4jSb_<%=cid%> = new StringBuffer();
+			<%
+			}
+		}
+		
+		//TODO rename or delete it
+		public void debugRetriveData(INode node,boolean hasIncreased) {
+			if(isLog4jEnabled){
+			%>
+				log.debug("<%=cid%> - Retrieving the record " + (nb_line_<%=cid%><%=hasIncreased?"":"+1"%>) + ".");
+			<%
+			}
+		}
+		
+		//TODO rename or delete it
+		public void debugRetriveData(INode node) {
+			debugRetriveData(node,true);
+		}
+		
+		//TODO rename or delete it
+		public void debugWriteData(INode node) {
+			if(isLog4jEnabled){
+			%>
+				log.debug("<%=cid%> - Writing the record " + nb_line_<%=cid %> + " to the file.");
+			<%
 			}
 		}
 	}

@@ -15,12 +15,9 @@
    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 	
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
 	com.amazonaws.services.s3.AmazonS3Client conn_<%=cid%> = (com.amazonaws.services.s3.AmazonS3Client)globalMap.get("conn_<%=connection%>");
 	if(conn_<%=cid%> !=null){
 		conn_<%=cid%>.shutdown();	
 	}
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

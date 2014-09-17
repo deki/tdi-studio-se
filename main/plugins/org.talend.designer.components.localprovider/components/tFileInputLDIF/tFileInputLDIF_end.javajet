@@ -30,7 +30,6 @@ if ((metadatas!=null)&&(metadatas.size()>0)) {
         
 <%
 		log4jFileUtil.retrievedDataNumberInfo(node);
-		log4jFileUtil.componentFinishInfo(node);
   }
 }  
  %>

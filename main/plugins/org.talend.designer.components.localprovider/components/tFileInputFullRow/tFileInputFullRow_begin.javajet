@@ -56,7 +56,6 @@ if ((metadatas!=null)&&(metadatas.size()>0)) {
 		
 		final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
     	log4jFileUtil.componentStartInfo(node);
-    	log4jFileUtil.logParameters(node);
 %>
 org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = null;
 
@@ -124,8 +123,6 @@ while (fid_<%=cid %>.nextRecord()) {
 					<%=firstConnName %>.<%=column.getLabel()%> = fid_<%=cid %>.get(<%=valueN%>);
 <%				}
 				
-				log4jFileUtil.collectRetriveData(firstConnName,metadata);
-	  			log4jFileUtil.debugRetriveData();
 %>			
 
 <%if(rejectConnName.equals(firstConnName)) {%> <%=firstConnName %> = null; <%}%>

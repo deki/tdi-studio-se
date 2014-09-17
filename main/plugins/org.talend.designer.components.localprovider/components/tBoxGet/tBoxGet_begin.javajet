@@ -32,13 +32,11 @@ imports="
 		
 		String boxPath = ElementParameterParser.getValue(node, "__PATH__");
 		String outputFolder = ElementParameterParser.getValue(node, "__OUTPUT__");
-		
+		String storeToLocal = ElementParameterParser.getValue(node, "__STORE_TO_LOCAL__");
 		boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 		
 		final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 				log4jFileUtil.componentStartInfo(node);
-				log4jFileUtil.logParameters(node);
-
         String dataOutputConnection = null;
 	    
 		List< ? extends IConnection> outputConnections = node.getOutgoingSortedConnections();
@@ -110,8 +108,8 @@ if(!"true".equals(useExistingConn)){
 					<%=cid%>_sBuilder.append(<%=cid%>_obj.getValue("name") + "/");
 				}
 				<%=cid%>_sBuilder.append(((com.box.boxjavalibv2.dao.BoxFile) <%=cid%>_entry).getName());
-				System.out.println("FOUND - " + <%=cid%>_sBuilder.toString());
-				System.out.println("NEED - " + <%=cid%>_path);
+				//System.out.println("FOUND - " + <%=cid%>_sBuilder.toString());
+				//System.out.println("NEED - " + <%=cid%>_path);
 				if (<%=cid%>_sBuilder.toString().equals(<%=cid%>_path))
 				{
 					<%=cid%>_boxFile = (com.box.boxjavalibv2.dao.BoxFile) <%=cid%>_entry;
@@ -196,25 +194,33 @@ if(!"true".equals(useExistingConn)){
 	} else if (<%=cid%>_boxFile == null && <%=cid%>_hasError) {
 	//Do Nothing, error already occured
 	} else {
-		//System.out.println("Found file! " + <%=cid%>_boxFile.getName());
-	
-		java.io.InputStream <%=cid%>_inputStream = null;
-	    java.io.File <%=cid%>_f = new java.io.File(<%=outputFolder%>);
-		if (!<%=cid%>_f.exists())
-		{
-			<%=cid%>_f.mkdirs();
-		}
-		String <%=cid%>_outputPath = <%=cid%>_f.getAbsolutePath() + java.io.File.separator + <%=cid%>_boxFile.getName();
-		java.io.FileOutputStream <%=cid%>_fos = null;
+		java.io.OutputStream <%=cid%>_fos = null;
+		java.io.InputStream <%=cid%>_bais = null;
 		try {
-			//System.out.println("Downloading file...");
+<% if("true".equals(storeToLocal)) { %>
+		    java.io.File <%=cid%>_f = new java.io.File(<%=outputFolder%>);
+			if (!<%=cid%>_f.exists())
+			{
+				<%=cid%>_f.mkdirs();
+			}
+			String <%=cid%>_outputPath = <%=cid%>_f.getAbsolutePath() + java.io.File.separator + <%=cid%>_boxFile.getName();
 			<%=cid%>_fos = new java.io.FileOutputStream(<%=cid%>_outputPath);
 			<%=cid%>_client.getFilesManager().downloadFile(<%=cid%>_boxFile.getId(), new java.io.OutputStream[] {<%=cid%>_fos}, null, new com.box.restclientv2.requestsbase.BoxDefaultRequestObject());
-			//System.out.println("File downloaded!");
-			<%if(dataOutputConnection != null){%>
-		<%=dataOutputConnection%>.fileName = <%=cid%>_outputPath;
-		<%=dataOutputConnection%>.content = new java.io.FileInputStream(<%=cid%>_outputPath);
-	<%}%>
+			globalMap.put("<%=cid %>_OUTPUT_PATH",<%=cid%>_outputPath);
+<%} else {%>
+			<%=cid%>_fos = new java.io.ByteArrayOutputStream();
+			<%=cid%>_client.getFilesManager().downloadFile(<%=cid%>_boxFile.getId(), new java.io.OutputStream[] {<%=cid%>_fos}, null, new com.box.restclientv2.requestsbase.BoxDefaultRequestObject());
+			((ByteArrayOutputStream) <%=cid%>_fos).flush();
+			((ByteArrayOutputStream) <%=cid%>_fos).close();
+			<%=cid%>_bais = new java.io.ByteArrayInputStream(((ByteArrayOutputStream) <%=cid%>_fos).toByteArray());
+<%if(dataOutputConnection != null){%>
+			<%=dataOutputConnection%>.fileName = <%=cid%>_boxFile.getName();
+			<%=dataOutputConnection%>.content = <%=cid%>_bais;	
+<%} else {%>
+			globalMap.put("<%=cid %>_INPUT_STREAM", <%=cid%>_bais);
+<%}
+}%>
+			
 		} catch (java.lang.Exception e) {
 <%
 			if(dieOnError) {
@@ -244,8 +250,7 @@ if(!"true".equals(useExistingConn)){
 			}
 		}
 	
-		globalMap.put("<%=cid %>_OUTPUT_PATH",<%=cid%>_outputPath);
-		globalMap.put("<%=cid %>_FILE_NAME",<%=cid%>_boxFile.getName());
-		globalMap.put("<%=cid %>_BOX_FILE_ID",<%=cid%>_boxFile.getId());
+		
+		
 	}	
 			

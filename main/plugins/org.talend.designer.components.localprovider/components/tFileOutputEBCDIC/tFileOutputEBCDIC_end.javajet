@@ -20,5 +20,4 @@
 	<%if(isLog4jEnabled){%>
 		log.info("<%=cid%> - Written records count: " + nb_line_<%=cid %> + " .");
 	<%}
-		log4jFileUtil.componentFinishInfo(node);
 	%>

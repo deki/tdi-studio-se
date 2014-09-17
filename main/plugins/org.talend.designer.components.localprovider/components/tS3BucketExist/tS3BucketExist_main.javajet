@@ -59,6 +59,4 @@ imports="
 	}
 	globalMap.put("<%=cid%>_BUCKET_NAME", <%=bucket%>);
 	globalMap.put("<%=cid%>_BUCKET_EXIST", bucketExist_<%=cid%>);
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

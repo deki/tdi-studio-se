@@ -51,7 +51,7 @@ Feel free to share your Talend components on [Talend Exchange](http://www.talend
 
 ## Contributors
 
-See the [CONTRIBUTORS.md](http://github.com/Talend/tdi-studio-se/CONTRIBUTORS.md) file for details.
+See the [CONTRIBUTORS.md](./CONTRIBUTORS.md) file for details.
 
 ## License
 

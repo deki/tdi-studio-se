@@ -96,5 +96,4 @@ imports="
 		log.info("<%=cid%> - Retrieved the objects count: " + nb_bucket_object_<%=cid%> + " .");
 	<%		
 	}
-	log4jFileUtil.componentFinishInfo(node);
 	%>

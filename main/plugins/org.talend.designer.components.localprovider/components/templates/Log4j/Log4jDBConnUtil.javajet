@@ -19,17 +19,10 @@ imports="
  		boolean logCommitCounter = false;
 
 		public DefaultLog4jCodeGenerateUtil(){
-			ignoreLogParameter();
-		}
-
-		public void ignoreLogParameter(){
-			ignoredParamsList = new java.util.ArrayList<String>();
-			ignoredParamsList.add("PASS");
 		}
 
 		public DefaultLog4jCodeGenerateUtil(INode node) {
 			super(node);
-			ignoreLogParameter();
 	    	init();
 		}
 
@@ -87,7 +80,6 @@ imports="
 		public void debugConnectionParams(INode node) {
 			beforeComponentProcess(node);
 			debugDriverClassName();
-			super.logParameters(node);
 		}
 
 		public void dbConnectionParamsForELT(INode previousNode){

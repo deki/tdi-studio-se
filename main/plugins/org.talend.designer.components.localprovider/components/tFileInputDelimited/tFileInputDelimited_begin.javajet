@@ -30,7 +30,6 @@
 	String vcid = "";
 	IProcess process = node.getProcess();
 	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(process, "__LOG4J_ACTIVATE__"));
-	log4jFileUtil.logParameters(node); 
 	log4jFileUtil.componentStartInfo(node); 
 	Map<String,String> varsMap=new java.util.HashMap<String,String>();
 	if(isLog4jEnabled){

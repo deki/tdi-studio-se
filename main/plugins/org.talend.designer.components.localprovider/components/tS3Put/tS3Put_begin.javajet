@@ -66,6 +66,4 @@ imports="
 		}
 		%>
 	}
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>        
+	        

@@ -42,7 +42,6 @@ imports="
 		
 		final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 				log4jFileUtil.componentStartInfo(node);
-				log4jFileUtil.logParameters(node);
 				
 		List< ? extends IConnection> outputConnections = node.getOutgoingSortedConnections();
 		

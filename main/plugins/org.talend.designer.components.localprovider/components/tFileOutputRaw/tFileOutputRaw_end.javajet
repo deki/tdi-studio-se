@@ -15,6 +15,3 @@
 
 	globalMap.put("<%=cid%>_FILENAME_PATH", fileName_<%=cid%>);
 	
-<%
-log4jFileUtil.componentFinishInfo(node);
-%>

@@ -15,8 +15,6 @@ imports="
     INode node = (INode)codeGenArgument.getArgument();
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("PRIVATEKEY","PASSWORD","PASSPHRASE")); 
-	log4jFileUtil.logParameters(node); 
     String cid = node.getUniqueName();
     String host = ElementParameterParser.getValue(
         node,

@@ -344,12 +344,8 @@ if (mestadataTableListOut!=null && mestadataTableListOut.size()>0) { // T_InMain
 
     								%>
     								if(aggregated_row_<%=cid %>.<%=outOperation %>_<%=function %> != null) {
-    								<%
-    								
-	    								%><%= outputConn.getName() %>.<%=outOperation %> = aggregated_row_<%=cid %>.<%=outOperation %>_<%=function %>.<%=primitiveOutputType%>Value();
-										<%
-
-    								%>
+    								<%= outputConn.getName() %>.<%=outOperation %> = aggregated_row_<%=cid %>.<%=outOperation %>_<%=function %>.<%=primitiveOutputType%>Value();
+										
     								}else{
     								<%
     									if(!JavaTypesManager.isJavaPrimitiveType(outputJavaType, outputColumn.isNullable())){// is Object%>

@@ -12,5 +12,4 @@
 	<%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
-	log4jFileUtil.componentFinishInfo(node);
 	%>

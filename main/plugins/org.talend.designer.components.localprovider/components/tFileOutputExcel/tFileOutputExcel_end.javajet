@@ -129,7 +129,6 @@
 		}		
 	<%}
 		log4jFileUtil.writeDataFinishInfo(node);
-		log4jFileUtil.componentFinishInfo(node);
 	}else{//version judgement /***excel 2007 xlsx*****/
 		List<IMetadataTable> metadatas = node.getMetadataList();
 		if ((metadatas!=null)&&(metadatas.size()>0)) {
@@ -225,6 +224,5 @@
 		}		
 	<%}
 log4jFileUtil.writeDataFinishInfo(node);
-log4jFileUtil.componentFinishInfo(node);
 	}
 	%>	

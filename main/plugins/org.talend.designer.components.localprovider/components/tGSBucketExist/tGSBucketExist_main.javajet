@@ -20,7 +20,6 @@
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
 	boolean bucketExist_<%=cid%>=false;
 	org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = null;
@@ -109,6 +108,4 @@
 	}
 	globalMap.put("<%=cid%>_BUCKET_NAME", <%=bucketName%>);
 	globalMap.put("<%=cid%>_BUCKET_EXIST", bucketExist_<%=cid%>);
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	
